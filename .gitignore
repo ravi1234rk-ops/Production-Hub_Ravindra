@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+config/outlook.local.json
+data/workfront-profile/
+data/*.sqlite-shm
+data/*.sqlite-wal
+data/*.tmp

@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Creative Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/workflow-ui.js" defer></script>
+  <script src="/operations-ui.js" defer></script>
+  <script src="/process-audit-ui.js" defer></script>
+  <script src="/leadership-reports-ui.js" defer></script>
+  <script src="/fflate.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <main id="auth-screen" class="auth-screen">
+    <section class="auth-card">
+      <div class="brand-mark">TP</div>
+      <p class="eyebrow">TEAM WORKSPACE</p>
+      <h1 id="auth-title">Welcome back</h1>
+      <p id="auth-copy" class="muted">Sign in to access your shared project workspace.</p>
+      <form id="auth-form" class="form-stack">
+        <label id="auth-name-wrap" class="hidden">Full name<input name="name" autocomplete="name" maxlength="100"></label>
+        <label>Username<input name="username" autocomplete="username" minlength="3" maxlength="32" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" minlength="10" maxlength="200" required></label>
+        <button id="auth-submit" class="button primary" type="submit">Sign in</button>
+      </form>
+      <p id="auth-footnote" class="auth-footnote">Your role and team / department access are assigned by your workspace Manager and applied after sign-in.</p>
+    </section>
+  </main>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Creative Lab home">
+        <span class="brand-mark small">TP</span><span>Project<span class="brand-light">Hub</span></span>
+      </a>
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="overview"><span>◫</span> Overview</button>
+        <button class="nav-link" data-view="my-work" data-capability="viewExecution"><span>▤</span> My work</button>
+        <button class="nav-link" data-view="quality" data-capability="viewQuality"><span>◉</span> Quality / FTR</button>
+        <button class="nav-link" data-view="kpi"><span>▥</span> KPI / performance</button>
+        <button class="nav-link" data-view="feedback"><span>✎</span> Learning &amp; feedback</button>
+        <button class="nav-link" data-view="worklog"><span>◷</span> Work log</button>
+        <button class="nav-link" data-view="hygiene" data-capability="viewHygiene"><span>✓</span> Hygiene</button>
+        <button class="nav-link" data-view="manager-reports" data-capability="viewManagerReports"><span>▥</span> Manager reports</button>
+        <button class="nav-link" data-view="team-utilization" data-capability="viewManagerReports"><span>▤</span> Team utilization</button>
+        <button class="nav-link" data-view="projects"><span>▤</span> Projects <span id="project-nav-count" class="nav-count"></span></button>
+        <button class="nav-link" data-view="gantt"><span>▥</span> Gantt timeline</button>
+        <button class="nav-link" data-view="capacity" data-capability="viewAht"><span>▦</span> Capacity dashboard</button>
+        <button class="nav-link" data-view="workfront" data-capability="viewWorkfront"><span>⇄</span> Workfront reports</button>
+        <button class="nav-link" data-view="aht" data-capability="viewPerformance"><span>◷</span> AHT &amp; capacity</button>
+        <button class="nav-link" data-view="audits" data-capability="viewAudits"><span>◉</span> Asset audits <span id="audit-nav-count" class="nav-count"></span></button>
+        <button class="nav-link" data-view="team"><span>♙</span> Team &amp; leave</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="network-note"><span class="online-dot"></span><div><strong>Shared workspace</strong><small>Changes sync with your team</small></div></div>
+        <div class="user-card">
+          <div id="user-avatar" class="avatar">U</div>
+          <div class="user-info"><strong id="user-name">User</strong><small id="user-role">Member</small></div>
+          <button id="logout-button" class="icon-button" title="Sign out" aria-label="Sign out">↗</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">DESIGN OPERATIONS</p><h1 id="page-title">Overview</h1></div>
+        <div class="topbar-actions">
+          <button id="today-risk-button" class="button secondary today-risk-button hidden" type="button">Today risk</button>
+          <button id="assignment-alert-button" class="button secondary hidden" type="button">Assignments</button>
+          <span id="last-updated" class="sync-label"><span class="online-dot"></span> Live team data</span>
+        </div>
+      </header>
+
+      <section id="view-overview" class="view">
+        <div class="welcome-row">
+          <div><h2 id="welcome-title">Good day</h2><p class="muted">A clear view of what’s moving, what’s due, and what needs attention.</p></div>
+          <span id="today-label" class="date-chip"></span>
+        </div>
+        <div id="metric-grid" class="metric-grid"></div>
+        <section id="gd-banner-overdue-alert" class="panel gd-banner-alert hidden" role="alert" aria-live="polite">
+          <div class="panel-heading"><div><h2>Urgent · GD Banner projects overdue</h2><p class="muted">Design Team Banner projects are overdue after two business days from Actual Start Date, regardless of material expected date. Weekends and configured holidays are excluded.</p></div></div>
+          <div id="gd-banner-overdue-list" class="table-wrap"></div>
+        </section>
+        <div class="dashboard-grid">
+          <section class="panel wide-panel">
+            <div class="panel-heading"><div><h2>Priority projects</h2><p class="muted">Upcoming deadlines and active work</p></div><button class="text-button" data-go="projects">All projects →</button></div>
+            <div id="priority-projects" class="table-wrap"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><h2>Team workload</h2><p class="muted">Open effort by assignee</p></div></div>
+            <div id="team-workload" class="workload-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><h2>Recent audits</h2><p class="muted">Latest asset checks</p></div><button class="text-button" data-go="audits">View all →</button></div>
+            <div id="recent-audits" class="compact-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="view-manager-reports" class="view hidden" data-capability="viewManagerReports">
+        <section id="leadership-report-panel" class="panel">
+          <div class="view-intro"><div><h2>Leadership production report</h2><p class="muted">Your team, ready to share. Select one team per manager report; Copy email bulletin includes the number cards.</p><p id="leadership-schedule" class="muted">Daily production &amp; effort; Monday utilisation, performance &amp; FTR. India time.</p></div><button id="leadership-reload" type="button" class="button secondary">Load reports</button></div>
+          <p id="leadership-error" role="alert"></p>
+          <div class="toolbar"><label>Prepared report<select id="leadership-report-select"><option value="">Choose report</option></select></label><label>Scope<select id="leadership-report-team"><option value="">Leadership summary / all permitted teams</option></select></label></div>
+          <p id="leadership-report-status" role="status"></p>
+          <div class="view-actions"><button id="leadership-xlsx" type="button" class="button secondary" disabled>Download Excel</button><button id="leadership-copy" type="button" class="button secondary" disabled>Copy email bulletin</button><button id="leadership-print" type="button" class="button secondary" disabled>Print / Save as PDF</button><button id="leadership-review" type="button" class="button primary" disabled>Mark reviewed</button><button id="leadership-refresh" type="button" class="button secondary" disabled>Prepare new version</button></div>
+          <div id="leadership-report-content"></div>
+          <details><summary>Email bulletin / manual copy</summary><textarea id="leadership-bulletin" rows="14" readonly aria-label="Leadership email bulletin"></textarea></details>
+          <form id="leadership-action-form" class="form-grid hidden"><input name="action" type="hidden"><label>Review / revision note<textarea name="note" maxlength="2000" required></textarea></label><button type="submit" class="button primary">Confirm</button><button id="leadership-action-cancel" type="button" class="button secondary">Cancel</button></form>
+        </section>
+        <div class="view-intro"><div><h2>Production management reports</h2><p class="muted">Focused counts for asset audit, build, QA audit, bug fixing, and Pending Clarification follow-up. Other client-side review and pending statuses are excluded.</p></div><label class="report-date-label">Report date<input id="manager-report-date" type="date"></label></div>
+        <h3>Workfront project priority</h3>
+        <p class="muted">Select a priority to open its projects, then filter by production team. Priority is read-only from Workfront.</p>
+        <div id="manager-report-summary" class="metric-grid manager-report-metrics"></div>
+        <details id="manager-leave-actions-panel" class="panel panel-disclosure leave-actions-panel" open><summary class="panel-heading"><div><h2>On leave — tasks to reassign</h2><p class="muted">Open Build and CR tasks held by team members on approved leave or away on <strong id="manager-leave-actions-date"></strong>, grouped by status and sorted by Material Expected Delivery Date. Reassign through the task editor or Workfront.</p></div></summary><div id="manager-leave-actions"></div></details>
+        <div class="dashboard-grid manager-report-grid">
+          <section class="panel"><div class="panel-heading"><div><h2>In-production status cards</h2><p class="muted">Counts use the matching Workfront project or task status. Select a count to open its source rows.</p></div></div><div id="manager-floor-status"></div></section>
+          <details class="panel panel-disclosure"><summary class="panel-heading"><div><h2>Workfront tasks by production team</h2><p class="muted">Counts all imported Workfront task rows; task statuses remain separate from parent project statuses.</p></div></summary><div id="manager-floor-teams" class="table-wrap"></div></details>
+          <details class="panel panel-disclosure"><summary class="panel-heading"><div><h2>Change-round source statuses</h2><p class="muted">Exact status values and record counts from the Workfront All Change Rounds report.</p></div></summary><div id="manager-cr-status" class="table-wrap"></div></details>
+          <details class="panel panel-disclosure"><summary class="panel-heading"><div><h2>Creative Lab CR assignment follow-up</h2><p class="muted">Separate local action helpers for project task allocation and approved-leave coverage; these do not alter Workfront report statuses.</p></div></summary><div id="manager-cr-assignment" class="table-wrap"></div></details>
+        </div>
+        <details class="panel manager-daily-panel panel-disclosure" open><summary class="panel-heading"><div><h2>Daily designer capacity &amp; utilization</h2><p class="muted">Scheduled task hours versus available roster capacity after holidays and leave.</p></div></summary><div id="manager-daily-capacity" class="table-wrap"></div></details>
+        <details class="panel manager-daily-panel panel-disclosure"><summary class="panel-heading"><div><h2>Daily production logged</h2><p class="muted">Distinct tasks/projects and logged time by team member for the selected date.</p></div></summary><div id="manager-daily-production" class="table-wrap"></div><div id="manager-daily-production-details" class="table-wrap manager-production-details"></div></details>
+        <details class="panel manager-daily-panel panel-disclosure"><summary class="panel-heading"><div><h2>Production team utilization</h2><p class="muted">Scheduled/logged task hours grouped by work channel; capacity share uses total available studio capacity because designers are not rostered to a single production team.</p></div></summary><div id="manager-team-utilization" class="table-wrap"></div></details>
+      </section>
+
+      <section id="view-team-utilization" class="view hidden" data-capability="viewManagerReports">
+        <div class="view-intro"><div><h2>Team utilization report</h2><p class="muted">Compare available capacity, scheduled effort, logged production hours, and completed work by resource and channel.</p></div></div>
+        <section class="panel">
+          <div class="toolbar utilization-toolbar">
+            <label>Period<select id="utilization-period"><option value="day">Day</option><option value="week">Week</option><option value="month">Month</option><option value="duration">Duration</option></select></label>
+            <label id="utilization-anchor-label">Anchor date<input id="utilization-anchor-date" type="date"></label>
+            <label id="utilization-start-label" class="hidden">From<input id="utilization-start-date" type="date"></label>
+            <label id="utilization-end-label" class="hidden">To<input id="utilization-end-date" type="date"></label>
+            <strong id="utilization-range-label" class="date-chip"></strong>
+          </div>
+          <div id="utilization-summary" class="metric-grid team-metrics"></div>
+          <div id="team-utilization-drill-notice"></div>
+          <div class="panel-heading"><div><h2>Resource utilization</h2><p class="muted">Availability excludes weekends, configured holidays, and approved leave.</p></div></div>
+          <div id="team-utilization-resources" class="table-wrap"></div>
+        </section>
+        <details class="panel panel-disclosure"><summary class="panel-heading"><div><h2>Channel production summary</h2><p class="muted">Logged hours and completed task volume during the selected interval.</p></div></summary><div id="team-utilization-channels" class="table-wrap"></div></details>
+        <details class="panel"><summary>Team non-productive activity details (selected utilization dates)</summary><div id="utilization-activity-details" class="table-wrap"></div></details>
+      </section>
+
+      <section id="view-projects" class="view hidden">
+        <div class="view-intro"><div><h2>Project schedule</h2><p class="muted">Plan delivery, manage assignments, and keep progress up to date.</p></div><div class="view-actions"><button id="projects-export" class="button secondary">Download CSV</button><button id="projects-new-button" class="button primary" data-capability="manageProjects">＋ New project</button></div></div>
+        <div class="toolbar">
+          <label class="search-field"><span>⌕</span><input id="project-search" placeholder="Search reference, project or designer"></label>
+          <select id="status-filter" aria-label="Filter project status"><option value="">All statuses</option><option>Not Started</option><option>In Progress</option><option>In Review</option><option>On Hold</option><option>Completed</option><option>Archived</option></select>
+          <select id="assignee-filter" aria-label="Filter assignee"><option value="">All team members</option></select>
+        </div>
+        <div id="projects-drill-notice"></div>
+        <div id="projects-table" class="panel table-panel"></div>
+      </section>
+
+      <section id="view-gantt" class="view hidden">
+        <div class="view-intro"><div><h2>Team delivery timeline</h2><p class="muted">Workfront task statuses, assignments, and planned dates, or the editable local production schedule.</p></div>
+          <div class="view-actions"><label data-capability="viewWorkfront">Source<select id="gantt-source"><option value="all">All production</option><option value="workfront">Workfront tasks</option><option value="local">Local production tasks</option></select></label><label>Team<select id="gantt-team-filter"><option value="">All teams</option></select></label><label>Group by<select id="gantt-group-by"><option value="resource">Resource wise</option><option value="project">Project wise</option><option value="task">Task wise</option></select></label><label>Timeline<select id="gantt-scale"><option value="day">Day</option><option value="hour">Hour</option><option value="week">Week</option><option value="month">Month</option></select></label><label>Start date<input id="gantt-anchor" type="date"></label><button id="new-task-button" class="button primary" data-capability="createOwnTasks">＋ Add CR / Bug task</button></div></div>
+        <div class="view-actions gantt-status-filters"><label>Task status<select id="gantt-status-filter"><option value="">All task statuses</option></select></label><label id="gantt-project-status-wrap">Project status<select id="gantt-project-status-filter"><option value="">All project statuses</option></select></label></div>
+        <div id="gantt-summary" class="metric-grid team-metrics"></div>
+        <div id="gantt-drill-notice"></div>
+        <p id="gantt-source-notice" class="muted"></p>
+        <p id="gantt-sync-status" class="muted" role="status"></p>
+        <div class="timeline-legend"><span class="legend-build">Build / production AHT</span><span class="legend-qa">QA AHT</span><span class="legend-progress">Progress</span><span class="legend-material">Material expected</span><span class="legend-completion">Planned completion / CR SLA end</span><span class="legend-actual">Actual completion</span></div>
+        <details class="panel panel-disclosure"><summary>Resource availability and unassigned production work</summary><div id="ops-capacity" class="table-wrap"></div></details>
+        <section class="panel gantt-panel"><div id="gantt-chart" class="gantt-scroll"></div></section>
+      </section>
+
+      <section id="view-capacity" class="view hidden" data-capability="viewAht">
+        <div class="view-intro"><div><h2>Production capacity</h2><p class="muted">Daily capacity &amp; delivery briefing for leadership, plus team availability, task mix and workload matrices.</p></div></div>
+        <div class="team-tabs" role="tablist" aria-label="Capacity sections">
+          <button type="button" role="tab" class="team-tab active" data-capacity-tab="report" aria-selected="true">Capacity report</button>
+          <button type="button" role="tab" class="team-tab" data-capacity-tab="dashboard" aria-selected="false">Dashboard</button>
+        </div>
+        <div data-capacity-pane="report">
+          <form id="briefing-form" class="panel briefing-controls">
+            <div class="briefing-fields">
+              <label>Team<select name="teamId"></select></label>
+              <label>Reporting date<input name="date" type="date" required></label>
+              <div class="briefing-day-buttons" role="group" aria-label="Quick reporting date">
+                <button type="button" class="button secondary" data-briefing-day="today">Today's report</button>
+                <button type="button" class="button primary" data-briefing-day="tomorrow" title="Next working day (skips weekends and holidays) so it can be shared a day before">Generate tomorrow's report</button>
+              </div>
+              <label>Productive hrs / designer<input name="productiveHours" type="number" min="1" max="12" step="0.5" value="7"></label>
+            </div>
+            <div class="briefing-notes">
+              <label>Action planned to manage risk <small>One item per line</small><textarea name="actions" rows="4" maxlength="2000"></textarea></label>
+              <label>Support required <small>One item per line</small><textarea name="support" rows="4" maxlength="2000"></textarea></label>
+            </div>
+            <details class="briefing-dates"><summary>Proposed delivery dates for Urgent tasks</summary><div id="briefing-urgent-dates" class="table-wrap"></div></details>
+            <div class="briefing-send">
+              <label>Leadership recipients<input name="recipients" type="text" maxlength="500" placeholder="name@company.com; name2@company.com"></label>
+              <button id="briefing-copy" class="button primary" type="button">Copy for email</button>
+              <button id="briefing-download" class="button secondary" type="button">Download Outlook draft (.eml)</button>
+              <button id="briefing-source-download" class="button secondary" type="button">Download Excel source report (.xlsx)</button>
+            </div>
+            <p class="muted">Notes and proposed dates are saved in this browser for the selected team and date. Builds count only for projects in production (Awaiting Execution / Execution in Progress) and are due on the Material Expected Delivery Date; CRs are due on their own Change Request delivery date. Project due cards cover the full day (no cut-off). Deliverables are counted as projects and CRs, not individual tasks. Effort uses the AHT matrix estimate (Workfront template planned hours are not used; items without an AHT estimate are flagged), less actual/logged time and progress; Bug Fixing is not included in this report. Half-day leave counts as 0.5 day. Email team reports add Asset Audit project count and effort (Audit = Current / Audit Ongoing, Pre-Audit; AHT matrix channel-lead minutes) for information. Pending Clarification cards show counts only and remain excluded from capacity totals; source details are available in the downloadable Excel report and email draft attachment. Work on other projects still in audit is excluded, as are Builds whose project has moved to QC, review or CRs.</p>
+          </form>
+          <section class="panel briefing-paper"><div id="briefing-preview"></div></section>
+        </div>
+        <div data-capacity-pane="dashboard" hidden>
+        <div id="capacity-summary" class="metric-grid team-metrics"></div>
+        <div id="capacity-drill-notice"></div>
+        <div id="capacity-drill-records"></div>
+        <section class="panel"><div class="panel-heading"><div><h2>Designer bandwidth</h2><p class="muted">Production and QA estimates use supplied AHT. Combined local + Workfront workload is available in the timeline's resource availability panel.</p></div></div><div id="capacity-team-table" class="table-wrap"></div></section>
+        <section class="panel capacity-matrix-panel"><div class="panel-heading"><div><h2>Production data matrix</h2><p class="muted">Slice task counts and planned/logged hours by operating dimension.</p></div><label>View matrix<select id="insight-dimension"><option value="byCategory">Task category</option><option value="byCategoryStatus">Task category + status</option><option value="byStatus">Task status</option><option value="byChannel">Channel</option><option value="byComplexity">Complexity</option><option value="byDesigner">Designer</option><option value="byCountry">Country / market</option><option value="byDpm">DPM</option><option value="auditsByStatus">Audit status</option><option value="auditsByChannel">Audit channel</option><option value="auditsByComplexity">Audit complexity</option><option value="auditsByCountry">Audit country / market</option><option value="auditsByDpm">Audit DPM</option><option value="auditsByAuditor">Auditor</option></select></label></div><div id="insight-matrix" class="table-wrap"></div></section>
+        <section class="panel" data-capability="manageWorkspace"><div class="panel-heading"><div><h2>Complexity effort multipliers</h2><p class="muted">Editable effort factors used for all new or replanned work.</p></div></div><form id="complexity-form" class="inline-form complexity-form"><label>Low<input name="Low" type="number" step="0.1" min="0.1" max="10" required></label><label>Medium<input name="Medium" type="number" step="0.1" min="0.1" max="10" required></label><label>High<input name="High" type="number" step="0.1" min="0.1" max="10" required></label><button class="button secondary" type="submit">Save multipliers</button></form></section>
+        </div>
+      </section>
+
+      <section id="view-workfront" class="view hidden" data-capability="viewWorkfront">
+        <div class="view-intro"><div><h2>Workfront report sync</h2><p class="muted">Project, change-round, and task status values are displayed as supplied by Workfront. Project and task statuses remain separate.</p></div></div>
+        <div id="workfront-summary" class="metric-grid team-metrics"></div>
+        <p id="workfront-sync-details" class="workfront-sync-details"></p>
+        <details class="panel panel-disclosure workfront-sync-panel" data-capability="manageWorkfrontSync">
+          <summary class="panel-heading"><div><h2>Sync Workfront exports</h2><p class="muted">Upload both current .xlsx exports. Only exact PRD WPP Production delivery-centre rows are captured; the duplicate “Data List” worksheet is ignored.</p></div></summary>
+          <div class="workfront-dom-sync">
+            <h3>Automatic Workfront sync</h3>
+            <p id="workfront-login-status" class="workfront-sync-details">Sign in to Workfront from the host browser before scraping or enabling automatic sync.</p>
+            <div class="workfront-dom-actions">
+              <button id="workfront-login-start" class="button secondary" type="button">Open Workfront sign-in</button>
+              <button id="workfront-login-complete" class="button primary hidden" type="button">I'm signed in — scrape now</button>
+              <button id="workfront-login-cancel" class="button secondary hidden" type="button">Cancel sign-in</button>
+              <button id="workfront-dom-sync-now" class="button secondary" type="button">Scrape Workfront now</button>
+              <button id="workfront-dom-toggle" class="button secondary" type="button">Enable 15-minute sync</button>
+            </div>
+            <p id="workfront-dom-sync-status" class="workfront-sync-details">Automatic sync is disabled. The sign-in window opens on the Creative Lab host, not on a remote teammate's computer. Complete SSO/MFA in Adobe, then return here and scrape.</p>
+            <p class="form-hint">Workfront credentials are entered only in Adobe's sign-in page and are never sent to Creative Lab. The saved local browser profile is reused for later scrapes.</p>
+          </div>
+          <form id="workfront-upload-form" class="workfront-upload-form">
+            <label>All Open Projects report<input name="openProjects" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>
+            <label>All Change Rounds report<input name="changeRounds" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required></label>
+            <button class="button primary" type="submit">Sync reports</button>
+          </form>
+          <p class="form-hint">Workfront project Reference Number is the Project ID. CRs link using Project Ref # and deduplicate using the CR ID (Name) and Workfront CR Reference Number. IDs already present in the project/CR workspace are skipped, not overwritten. Subsequent syncs refresh the report snapshot without adding duplicate records. Local audit actions do not rewrite the source statuses shown in these reports.</p>
+          <div class="workfront-routing"><strong>Asset routing:</strong><span><b>Email Team</b> · Email · Campaign · Landing page · eDetailer</span><span><b>Design Team</b> · iPDF · Print · PPT/Gslide · Static banner · Illustration · Poster · Social post · WhatsApp</span><span><b>Web Team</b> · Website · Banner HTML</span><span><b>Video Team</b> · Video · GIF · Animated/GIF banner</span></div>
+          <p class="form-hint">Automatic DOM sync reads the two project / CR reports and the Execution Task Assignment report every 15 minutes, including virtualized rows. It applies the PRD WPP Production prompt, expands grouped tasks, and verifies the full report count before replacing the snapshot. Task status and progress are displayed separately from the joined project status.</p>
+        </details>
+        <div id="workfront-drill-notice"></div>
+        <section class="panel workfront-data-panel">
+          <div class="panel-heading"><div><h2 id="workfront-list-title">All Open Projects</h2><p id="workfront-list-hint" class="muted">Projects keyed by Workfront Reference Number.</p></div>
+            <div class="workfront-data-tabs"><button type="button" class="button secondary active" data-workfront-dataset="projects">Open Projects</button><button type="button" class="button secondary" data-workfront-dataset="changeRounds">Change Rounds</button><button type="button" class="button secondary" data-workfront-dataset="tasks">Tasks</button></div>
+          </div>
+          <div class="toolbar workfront-filter-toolbar">
+            <label class="search-field"><span>⌕</span><input id="workfront-search" placeholder="Search Project ID, CR ID, name, owner"></label>
+            <select id="workfront-team-filter" aria-label="Filter Workfront department"><option value="">All departments</option><option>Email Team</option><option>Design Team</option><option>Web Team</option><option>Video Team</option><option>Unmapped</option></select>
+            <select id="workfront-status-filter" aria-label="Filter Workfront status"><option value="">All source statuses</option></select>
+            <select id="workfront-project-status-filter" class="hidden" aria-label="Filter parent project status"><option value="">All project statuses</option></select>
+            <select id="workfront-priority-filter" aria-label="Filter Workfront project priority"><option value="">All project priorities</option></select>
+          </div>
+          <div id="workfront-records" class="table-wrap"></div>
+          <div id="workfront-pagination" class="workfront-pagination"></div>
+        </section>
+      </section>
+
+      <section id="view-aht" class="view hidden">
+        <div class="view-intro"><div><h2>AHT &amp; capacity planning</h2><p class="muted">Planning estimates use the Validation 2026 matrix when a channel and request type match; otherwise logged AHT and the 1.3-hour baseline are used.</p></div></div>
+        <div id="aht-summary" class="metric-grid team-metrics"></div>
+        <div id="aht-drill-notice"></div>
+        <section class="panel"><div class="panel-heading aht-matrix-heading"><div><h2>Validation 2026 planning matrix</h2><p class="muted">Grouped by channel. Times are in hours; Managers can edit planning values and notes, then save. Build uses Designer + Build plus QA Lead + QA; CR uses CR Build plus CR QA. The fixed 40% QA rule is removed. Missing QA AHT is explicitly marked unavailable. Workbook TAT values do not change the existing TAT matrix.</p></div><button id="aht-matrix-save" class="primary-button hidden" type="button" data-save-aht-matrix>Save matrix changes</button></div><div id="aht-validation-matrix" class="aht-validation-matrix"></div></section>
+      </section>
+
+      <section id="view-audits" class="view hidden">
+        <div id="audit-clock-list" class="panel"></div>
+        <div class="view-intro"><div><h2>Asset audit log</h2><p class="muted">Record pre-audits and final checks alongside project delivery.</p></div><div class="view-actions"><button id="market-matrix-button" class="button secondary" data-capability="viewMarketMatrix">Market / DPM matrix</button><button id="audits-export" class="button secondary">Download CSV</button><button id="new-audit-button" class="button primary" data-capability="manageAudits">＋ Record audit</button></div></div>
+        <div class="toolbar">
+          <label class="search-field"><span>⌕</span><input id="audit-search" placeholder="Search project ID, auditor or observation"></label>
+          <select id="audit-type-filter" aria-label="Filter audit type"><option value="">All audit types</option><option>Pre-Audit</option><option>Audit</option></select>
+          <select id="audit-status-filter" aria-label="Filter audit status"><option value="">All results</option><option>Pass</option><option>Fail</option><option>Ready with Conditions</option><option>Not Ready</option><option>Pending</option></select>
+        </div>
+        <div id="audits-drill-notice"></div>
+        <section class="panel audit-sla-panel">
+          <div class="panel-heading"><div><h2>Asset audit SLA</h2><p class="muted">Hold times use the Workfront Last Update Date, falling back to Last Status Changed when no update date is available.</p></div></div>
+          <div class="audit-sla-grid">
+            <section class="audit-sla-queue"><div class="audit-sla-heading"><h3>Pre-Audit</h3><span>Hold time · 24 hrs</span></div><div id="audit-preaudit-queue" class="audit-sla-list"></div></section>
+            <section class="audit-sla-queue"><div class="audit-sla-heading"><h3>Current · Asset Audit</h3><span>Hold time · 4 hrs</span></div><div id="audit-current-queue" class="audit-sla-list"></div></section>
+          </div>
+        </section>
+        <section class="panel"><div class="panel-heading"><div><h2>CRs awaiting audit / acceptance</h2><p class="muted">Assigned to a named auditor or manager, with neither an acceptance date nor a CR completion date.</p></div></div><div id="audit-cr-queue" class="table-wrap"></div></section>
+        <details class="panel panel-disclosure" open><summary class="panel-heading"><div><h2>Audit records</h2><p class="muted">Expand or collapse the audit log without leaving this section.</p></div></summary><div id="audits-list" class="audit-grid"></div></details>
+        <details class="panel panel-disclosure workfront-production-panel" data-capability="viewWorkfront">
+          <summary class="panel-heading"><div><h2>PRD production workflow</h2><p class="muted">Pre-audit → allocation → execution → QC → complete. Rework can be opened in another round.</p></div></summary>
+          <div id="workfront-production-queues" class="workfront-production-queues"></div>
+        </details>
+        <section class="panel change-rounds-panel">
+          <div class="panel-heading"><div><h2>Change rounds</h2><p class="muted">CR turnaround is measured in business days and keeps the landed time.</p></div><button id="new-change-round-button" class="button secondary" data-capability="viewChangeRounds">＋ Add change round</button></div>
+          <div id="change-rounds-list" class="change-rounds-list"></div>
+        </section>
+      </section>
+
+      <section id="view-my-work" class="view hidden">
+        <div class="view-intro"><div><h2>My work</h2><p class="muted">Your assigned projects and CRs. Start tracks elapsed time; Hold pauses and saves; Stop saves time without completing work.</p></div><button type="button" class="button secondary" data-view="quality">My quality / FTR</button></div>
+        <div id="execution-summary" class="metric-grid"></div>
+        <div id="execution-timer" class="panel" aria-live="polite"></div>
+        <div class="toolbar"><label>Find work<input id="execution-search" type="search" placeholder="Project, CR or status"></label><label>Type<select id="execution-type"><option value="">All tasks</option><option>Build</option><option>CR</option><option>Bug Fixing</option><option>Asset Audit</option><option>QA Audit</option></select></label><label>Show<select id="execution-status"><option value="open">Open assignments</option><option value="all">All assignments</option></select></label></div>
+        <div id="execution-list" class="execution-grid"></div>
+      </section>
+      <section id="view-quality" class="view hidden">
+        <div class="view-intro"><div><h2>Quality &amp; first-time-right</h2><p class="muted">FTR = verified first-pass deliveries ÷ deliveries with a verified first-pass decision. A project Build, each identified CR and each bulletin CR (by QA task) count once, not once per executor or defect. Published Design QA bulletin reports are considered verified: no additional validation is required. Reported bugs count as FTR failures; manual corrections remain available. Other teams need confirmed QA. Work without a QA decision is excluded from the percentage, never assumed passed.</p></div><div class="view-actions"><button id="quality-last-week" class="button primary" type="button">Last week's FTR bulletin</button><button id="quality-export" class="button secondary" type="button">Download quality CSV</button></div></div>
+        <div class="toolbar"><label>Period<select id="quality-period"><option value="daily">Daily</option><option value="weekly" selected>Weekly</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="yearly">Yearly</option><option value="ytd">YTD</option><option value="all">Since 1 Jul 2026</option><option value="undated">Undated / needs verification</option></select></label><label>Quarter<select id="quality-quarter" aria-label="Quality quarter"></select></label><label>Reporting date<input type="date" id="quality-date" min="2026-07-01"></label></div>
+        <label>Member<select id="quality-member"><option value="">All members in scope</option></select></label><p id="quality-coverage" class="muted"></p>
+        <div id="quality-summary" class="metric-grid"></div>
+        <p id="quality-week-bulletin" class="panel" role="status"></p>
+        <details class="panel"><summary>Team-member breakdown (shared deliveries can appear for more than one member)</summary><div id="quality-matrix" class="table-wrap"></div></details>
+        <details class="panel"><summary>Delivery review / exceptions</summary><div class="toolbar"><label>Show<select id="quality-outcome"><option value="attention">Needs verification / rework</option><option value="all">All deliveries</option><option value="ftr">Verified FTR only</option></select></label><label>Find project<input id="quality-search" type="search"></label></div><div id="quality-list" class="table-wrap"></div><div class="view-actions"><button id="quality-previous" type="button" class="button secondary">Previous</button><span id="quality-page"></span><button id="quality-next" type="button" class="button secondary">Next</button></div></details>
+        <details class="panel"><summary>Source tasks / CRs (up to 20 preview rows)</summary><p class="muted">Source evidence, not additional deliveries in the FTR denominator.</p><div id="quality-instances" class="table-wrap"></div></details>
+        <details class="panel"><summary>Bug / rework evidence (up to 20 preview rows)</summary><button type="button" id="bug-report-export" class="button secondary">Download all bug evidence CSV</button><p id="bug-report-coverage" class="muted"></p><div id="bug-update-report" class="table-wrap"></div></details>
+        <h3>Quality issue / bug report · QA bulletin</h3><p class="muted">Published QA bulletin results count directly in Quality KPI and FTR. Bugs mark linked deliveries as FTR failures; no validation is required. Use Verify / correct FTR / Bug in a draft for corrections, or create a corrected draft for a published week.</p>
+        <details id="weekly-qa-tools" class="panel"><summary>Add / import weekly QA report</summary><form id="weekly-qa-import-form" class="form-grid"><label>Monday<input name="from" type="date" required></label><label>Sunday<input name="to" type="date" required></label><label>QA workbook (optional for blank draft)<input name="file" type="file" accept=".xlsx"></label><label>Source / report note<textarea name="note" maxlength="4000" required></textarea></label><button type="submit" class="button primary">Create QA draft</button></form></details>
+        <label>Report / version<select id="weekly-qa-select"></select></label><p id="weekly-qa-status" class="muted"></p><div id="weekly-qa-actions" class="view-actions"></div>
+        <label>Show<select id="weekly-qa-filter"><option value="all">All rows</option><option value="attention">Optional verification</option><option value="matched">Matched</option><option value="excluded">Excluded</option></select></label>
+        <details class="panel"><summary>Source / report details</summary><p id="weekly-qa-source" class="muted"></p></details>
+        <div id="weekly-qa-summary" class="metric-grid"></div><div id="weekly-qa-rows" class="panel table-wrap"></div><div class="view-actions"><button id="weekly-qa-previous" type="button" class="button secondary" disabled>Previous</button><span id="weekly-qa-page"></span><button id="weekly-qa-next" type="button" class="button secondary" disabled>Next</button></div>
+        <details id="weekly-qa-add" class="panel"><summary>Add a QA result / bug record to this draft</summary><form id="weekly-qa-row-form" class="form-grid"><label>QA task / evidence ID<input name="qaTaskId" maxlength="120" required></label><label>Workfront project reference<input name="projectRef" maxlength="80" required></label><label>Original executor<select name="executor" required></select></label><label>Request<select name="requestType"><option value="D1">Project / D1</option><option value="CR">Individual CR</option></select></label><label>CR ID (required for CR)<input name="crId" maxlength="80"></label><label>QA delivery date<input name="deliveredDate" type="date" required></label><label class="checkbox-line"><input name="bugCreated" type="checkbox"> Bugs / rework reported</label><label>Bug created date<input name="bugDate" type="date"></label><label>Total defects (informational)<input name="totalBugs" type="number" min="0" step="1" value="0"></label><label>Bug worker (not fault attribution)<input name="bugAssignee" maxlength="160"></label><label class="span-2">QA result / bug details / source evidence<textarea name="note" maxlength="4000" required></textarea></label><button type="submit" class="button primary">Add QA record</button></form></details>
+      </section>
+      <section id="view-hygiene" class="view hidden">
+        <div class="toolbar" role="tablist" aria-label="Hygiene reports">
+          <button id="hygiene-adherence-tab" class="button primary" type="button" role="tab" aria-selected="true" aria-controls="hygiene-adherence-panel">Process Adherence</button>
+          <button id="hygiene-audit-tab" class="button secondary" type="button" role="tab" aria-selected="false" aria-controls="hygiene-audit-panel">Process Audit</button>
+        </div>
+        <div id="hygiene-adherence-panel" role="tabpanel" aria-labelledby="hygiene-adherence-tab">
+        <div class="view-intro"><div><h2>Workfront hygiene / process adherence</h2><p class="muted">One row per project. Auditor boilerplate in Asset Audit task / project Updates is the first source; locally saved asset audit results are the fallback. Green = match, light red = mismatch, amber = doubtful. Expand comparisons to see evidence.</p></div><button id="hygiene-export" class="button secondary" type="button">Download adherence CSV</button></div>
+        <div class="toolbar"><label>Workfront ID / project<input id="hygiene-project" type="search" placeholder="All projects"></label><label>Show<select id="hygiene-filter"><option value="">All projects</option><option value="Action required">Mismatch</option><option value="Corrected">Match</option><option>Manually verified</option><option value="Not verified">Doubtful</option></select></label>
+          <label>From<input id="hygiene-from" type="date"></label><label>To (same date for one day)<input id="hygiene-to" type="date"></label><label>Coverage<select id="hygiene-dated"><option value="all">Dated + undated</option><option value="dated">Dated only</option><option value="undated">Undated only</option></select></label></div>
+        <p class="muted">Edit verification records local status and supporting notes, never changes Workfront. Recheck clears manual overrides and compares the latest imported details; sync first for remote corrections. Only explicit page-count values are compared; absent or ambiguous evidence stays doubtful. Planned completion is checked against material expected delivery and the existing SLA rules. Manual outcomes expire when compared details or audit evidence change.</p>
+        <div id="hygiene-summary" class="metric-grid"></div><div id="hygiene-list" class="panel table-wrap"></div>
+        <h2>Project SLA / delivery misses</h2><p class="muted">Actual Start Date from Project Details to Planned Completion Date. Projected/Planned Start is not substituted. Open projects past planned completion and projects completed late are SLA misses. Missing actual-start/completion evidence is Not verified.</p>
+        <button id="sla-export" type="button" class="button secondary">Download SLA report</button><div id="sla-summary" class="metric-grid"></div><div id="sla-list" class="panel table-wrap"></div>
+        </div>
+        <div id="hygiene-audit-panel" class="hidden" role="tabpanel" aria-labelledby="hygiene-audit-tab">
+          <div class="view-intro"><div><h2>Monthly Process Audit</h2><p class="muted">Reviewed JSON evidence reports, grouped by project creation month. Explanations are evidence assessments, not automatic proof of a process miss. Process Adherence, SLA and KPI remain unchanged.</p></div><button id="process-audit-download" class="button secondary" type="button" disabled>Download XLSX</button></div>
+          <div class="toolbar">
+            <label>Report month<input id="process-audit-month" type="month" required></label>
+            <label>Saved monthly reports<select id="process-audit-saved"><option value="">Select a saved month</option></select></label>
+            <label>Search projects / people / evidence<input id="process-audit-search" type="search" maxlength="500"></label>
+            <label>Reason category<select id="process-audit-category"><option value="">All categories</option></select></label>
+            <label>Verification<select id="process-audit-status"><option value="">All statuses</option><option>Verified</option><option>Inferred</option><option>Needs confirmation</option></select></label>
+          </div>
+          <form id="process-audit-import" class="panel hidden">
+            <h3>Import process-team reviewed JSON evidence report</h3>
+            <p class="form-hint">Upload JSON only, not Excel. The report month must match the selected month. Import replaces the entire saved month; it does not append rows. Team managers cannot replace a month containing other teams' projects.</p>
+            <label>JSON evidence report (maximum 8 MiB)<input id="process-audit-file" type="file" accept=".json,application/json" required></label>
+            <label class="checkbox-line"><input id="process-audit-confirm" type="checkbox" required> I confirm this reviewed report replaces the entire selected month, including any existing rows.</label>
+            <button id="process-audit-import-button" class="button primary" type="submit">Import / replace selected month</button>
+          </form>
+          <p id="process-audit-message" role="status" aria-live="polite"></p>
+          <p id="process-audit-coverage" class="muted"></p>
+          <p class="muted">This is a manually imported monthly process-team report, not an automated live Workfront refresh. Same-day project counts provide workload context only; current assignments do not establish historical assignments or a confirmed delay cause. Hold and working-hours values are imported, not recalculated. Hold Time retains the source value; its unit is not specified by the source workbook.</p>
+          <div id="process-audit-summary" class="metric-grid"></div>
+          <div id="process-audit-list" class="panel table-wrap"></div>
+        </div>
+      </section>
+      <section id="view-kpi" class="view hidden">
+        <div class="view-intro"><div><h2>KPI / performance review</h2><p class="muted">Approved KPI: Manager feedback 20 + Productivity 30 + On-time Delivery 10 + Quality 30 + Process adherence 10. Quarterly scoring; evidence available from 1 Jul 2026. No Q2 ratings are copied into current performance.</p></div><button id="kpi-export" type="button" class="button secondary">Download KPI CSV</button></div>
+        <div class="toolbar"><label>Period<select id="kpi-period"><option value="monthly">Monthly (evidence + QTD score)</option><option value="quarterly" selected>Quarterly</option><option value="half-yearly">Half-yearly (published quarters)</option><option value="yearly">Yearly (published quarters)</option></select></label><label>Quarter<select id="kpi-quarter" aria-label="KPI quarter"></select></label><label>Period containing / as of<input id="kpi-date" type="date" min="2026-07-01"></label><button id="kpi-refresh" type="button" class="button secondary">Load period</button><span id="kpi-load-status" role="status"></span></div>
+        <details id="reporting-history-tools" class="panel hidden"><summary>Import dated historical Workfront evidence (Admin)</summary><p>History only: does not replace active queues. Export records from 1 Jul 2026 onwards. Task report requires Task ID, Project: Reference Number, Project: Name, Task Name, Status, Assignments, Project: Primary Material, Planned Start Date, Planned Completion Date, Project: Delivery Centre, % Complete and Actual Completion Date. Include Entry Date to date Bug Fixing tasks. Project report requires Reference Number, Project Name, Status, Primary Material, Delivery Centre, Actual Start Date, Planned Completion Date and Actual Completion Date. CR report uses the standard export with Change Request Completion Date. Missing required columns are rejected.</p><form id="reporting-history-form" class="form-grid"><label>Report<select name="type"><option value="tasks">Tasks (completed work / bugs / audits)</option><option value="projects">Projects (SLA timelines)</option><option value="rounds">Change rounds</option></select></label><label>Workfront XLSX export<input name="file" type="file" accept=".xlsx" required></label><button type="submit" class="button secondary">Import reporting evidence only</button></form></details>
+        <p id="kpi-period-label" class="muted"></p><div id="kpi-summary" class="metric-grid"></div><div id="kpi-list" class="panel table-wrap"></div>
+        <h3>Published member reports</h3><p class="muted">Explicit Manager publication; immutable versioned snapshots. Corrections create a new version with a note. Open or incomplete periods are provisional. Recalled reports retain their audit trail. Scoring starts 1 Jul 2026; earlier quarters are outside coverage, not assumed complete.</p><div id="kpi-publications" class="panel table-wrap"></div>
+        <details class="panel"><summary>Approved scoring and evidence rules</summary><p>Productivity compares completed assets with the highest count in the same team/role: ≥90% = 30, ≥85% = 24, ≥70% = 18, ≥40% = 12, below 40% = 6. No benchmark means Not verified. Auditor productivity uses completed Asset Audit tasks. Utilization shows productive hours against 150h/month separately, not an invented score.</p><p>Quality misses per quarter: 0–2 = 30, 3 = 25, 4 = 15, 5+ = 0. On-time delivery: more than 1 miss = 0, otherwise 10. Process misses: below 5 = 10, 5–10 = 5, above 10 = 0. Manager feedback: four Met/Not met criteria worth 5 points each. Missing evidence needs Manager verification. A changed evidence set makes a confirmed review stale.</p><p>Ratings: Manager 17–20 / 13–16 / 9–12 / 5–8 / 0–4 → 5 / 4 / 3 / 2 / 1. Productivity 25–30 / 19–24 / 13–18 / 7–12 / 0–6 → 5 / 4 / 3 / 2 / 1. Quality 0–2 / 3 / 4 / 5 / 6+ misses → 5 / 4 / 3 / 2 / 1. Final overall rating remains Manager-reviewed; no unapproved conversion from total /100.</p></details>
+        <section id="kpi-manager-tools" class="panel hidden"><h3>Log a KPI issue</h3><form id="kpi-issue-form" class="form-grid">
+          <label>Member<select name="memberId" required></select></label><label>Date<input name="date" type="date" min="2026-07-01" required></label>
+          <label>Category<select name="category"><option>Quality</option><option>On-time Delivery</option><option>Process adherence</option><option>Manager feedback</option></select></label>
+          <label>Related assignment<select name="deliveryKey"><option value="">General / non-project issue</option></select></label>
+          <label class="span-2">Issue and evidence<textarea name="note" maxlength="4000" required></textarea></label>
+          <label class="span-2">Upload evidence<input name="attachments" type="file" multiple><small>Optional: select multiple files (up to 10). Maximum 5 MB each, 10 MB combined. Saved files are downloadable by users who can view this issue.</small></label>
+          <button class="button primary" type="submit">Log validated issue</button>
+        </form></section><h3>Recorded KPI issues</h3><div id="kpi-issues" class="panel table-wrap"></div>
+      </section>
+      <section id="view-feedback" class="view hidden">
+        <label>Filter responses<select id="feedback-filter"><option value="">All learnings, challenges and feedback</option><option>Learning</option><option>Challenge</option><option>Feedback</option><option>Open</option><option>Actioned</option></select></label>
+        <h3>Team best practices</h3><div id="best-practice-list" class="panel table-wrap"></div>
+        <h2>Learning, challenges &amp; project feedback</h2><p class="muted">Share project-linked learning or blockers with your Manager. Manager responses remain visible here.</p>
+        <form id="project-feedback-form" class="panel form-grid"><label>Project<select name="projectRef" required></select></label><label>Type<select name="category"><option>Learning</option><option>Challenge</option><option>Feedback</option></select></label><label class="span-2">Details<textarea name="message" maxlength="4000" required></textarea></label><button class="button primary" type="submit">Send to Manager</button></form>
+        <div id="project-feedback-list" class="panel table-wrap"></div>
+      </section>
+      <section id="view-worklog" class="view hidden">
+        <div class="view-intro"><div><h2>Work log</h2><p class="muted">Your logged time. Project effort is logged from My work and the Gantt timeline; non-productive hours are logged below.</p></div></div>
+        <div class="toolbar"><label>Member<select id="activity-member"><option value="">All members in scope</option></select></label><label>From<input id="activity-from" type="date"></label><label>To<input id="activity-to" type="date"></label></div>
+        <section id="personal-log-panel" class="panel hidden"><div class="panel-heading"><div><h2>My task log</h2><p class="muted">Time entries grouped by period.</p></div><label>Period<select id="personal-log-period"><option value="day">Daily</option><option value="week">Weekly</option><option value="month">Monthly</option><option value="year">Yearly</option></select></label></div><div id="personal-log-table" class="table-wrap"></div></section>
+        <h3>Non-productive hours</h3><p class="muted">Log Training, Meeting and Other activities separately from project effort. These hours never count as completed assets or productive utilization.</p>
+        <form id="non-productive-form" class="panel form-grid"><label>Date<input name="date" type="date" min="2026-07-01" required></label><label>Activity<select name="category"><option>Training</option><option>Meeting</option><option>Other</option></select></label><label>Hours<input name="hours" type="number" min="0.01" max="24" step="0.01" required></label><label>Details<textarea name="note" maxlength="2000" required></textarea></label><button class="button primary" type="submit">Log non-productive hours</button></form>
+        <div id="non-productive-summary" class="metric-grid"></div><div id="non-productive-list" class="panel table-wrap"></div>
+      </section>
+      <section id="view-team" class="view hidden">
+        <div class="view-intro"><div><h2>Team &amp; leave</h2><p class="muted">Members, shifts, leave and workspace accounts in one place.</p></div><button id="backup-button" class="button secondary hidden">Download backup</button></div>
+        <div class="team-tabs" role="tablist" aria-label="Team and leave sections">
+          <button type="button" role="tab" id="team-tab-members" class="team-tab active" data-team-tab="members" aria-selected="true">Team</button>
+          <button type="button" role="tab" id="team-tab-leave" class="team-tab" data-team-tab="leave" aria-selected="false">Leave</button>
+          <button type="button" role="tab" id="team-tab-accounts" class="team-tab" data-team-tab="accounts" aria-selected="false" data-capability="manageWorkspace">Accounts</button>
+        </div>
+        <div data-team-pane="members" role="tabpanel" aria-labelledby="team-tab-members">
+          <div id="team-summary" class="metric-grid team-metrics"></div>
+          <div id="team-drill-notice"></div>
+          <section class="panel">
+            <div class="panel-heading"><div><h2>Team members</h2><p class="muted">People available for project assignment. Admins can save each person's WPP Production email. New KPI issues email the affected member from the logging manager's saved mailbox, when Outlook is configured.</p></div></div>
+            <form id="team-form" class="inline-form" data-capability="manageWorkspace"><input name="name" placeholder="Add a team member" maxlength="100" required><button class="button secondary" type="submit">Add member</button></form>
+            <p id="workfront-mapping-note" class="muted workfront-mapping-note hidden"></p>
+            <datalist id="workfront-assignee-options"></datalist>
+            <div id="team-list" class="team-list"></div>
+          </section>
+          <details class="panel panel-disclosure department-overview"><summary class="panel-heading"><div><h2>Teams &amp; departments</h2><p class="muted">Department membership defines project access; QA membership covers all production departments.</p></div></summary>
+            <div id="department-cards" class="department-grid"></div>
+          </details>
+        </div>
+        <div data-team-pane="leave" role="tabpanel" aria-labelledby="team-tab-leave" hidden>
+        <div id="leave-summary" class="metric-grid team-metrics"></div>
+        <section class="panel leave-entry-panel" data-capability="applyForLeave">
+          <div class="panel-heading"><div><h2>Apply for leave</h2><p class="muted">Your request stays pending until a Manager approves it. Pending leave does not affect capacity or assignment dates.</p></div></div>
+          <form id="leave-form" class="leave-form">
+            <label>Team member<select name="assignee" required></select></label>
+            <label>Leave type<select name="type"><option>Annual leave</option><option>Sick leave</option><option>Personal leave</option><option>Other</option></select></label>
+            <label>Duration<select name="halfDay"><option value="">Full day(s)</option><option>First half</option><option>Second half</option></select></label>
+            <label>Start date<input name="startDate" type="date" required></label>
+            <label>End date<input name="endDate" type="date" required></label>
+            <label class="leave-note">Request note <span class="muted">(visible to Managers)</span><input name="note" maxlength="500" placeholder="Optional coverage or handover information"></label>
+            <button class="button primary" type="submit">＋ Submit leave request</button>
+          </form>
+        </section>
+        <div id="leaves-drill-notice"></div>
+        <section class="panel holiday-panel"><div class="panel-heading"><div><h2>Business holidays</h2><p class="muted">Holidays are excluded from capacity, TAT and ETA dates. A delivery or material expected date on a holiday counts on the next working day and is highlighted wherever it appears.</p></div></div>
+          <form id="holiday-form" class="holiday-add-row" data-capability="manageHolidays"><label>Holiday name<input name="name" maxlength="120" required placeholder="e.g. Diwali"></label><label>Date<input name="date" type="date" required></label><button class="button primary" type="submit">＋ Add holiday</button></form>
+          <div id="holiday-calendar" class="table-wrap"></div>
+        </section>
+        <section class="panel leave-list-panel"><div class="panel-heading"><div><h2>Leave calendar &amp; schedule impact</h2><p class="muted">Affected open tasks are automatically rescheduled around leave and holidays.</p></div></div><div id="leave-list" class="table-wrap"></div></section>
+        <details class="panel panel-disclosure" data-capability="viewManagerReports"><summary class="panel-heading"><div><h2>Leave coverage and reassignment risks</h2><p class="muted">Highlights active work that overlaps approved leave, is overdue, is due within two business days, or is marked Urgent. Reassign through the task editor before leave if delivery is at risk.</p></div></summary><div id="leave-risk-report" class="table-wrap"></div></details>
+        </div>
+        <div data-team-pane="accounts" role="tabpanel" aria-labelledby="team-tab-accounts" hidden>
+          <section id="accounts-panel" class="panel hidden" data-capability="manageWorkspace">
+            <div class="panel-heading"><div><h2>Workspace accounts</h2><p class="muted">Create a login for a teammate. Passwords are stored as salted hashes.</p></div></div>
+            <details class="account-create"><summary class="button secondary">＋ Create account</summary><form id="account-form" class="form-stack compact-form">
+              <label>Full name<input name="name" maxlength="100" required></label>
+              <label>Username<input name="username" minlength="3" maxlength="32" required></label>
+              <label>Temporary password<input name="password" type="password" minlength="10" maxlength="200" required></label>
+              <label>Role<select name="role" id="account-role"><option value="executioner">Executioner / Designer</option><option value="auditor">Auditor</option><option value="teamManager">Team Manager · scoped</option><option value="manager">Manager · workspace admin</option><option value="leadership">Leadership · read-only reports</option></select></label>
+                <label id="account-departments-field">Team / department<select name="teamIds" multiple required size="5"><option value="email">Email Team · Email, Campaign, Landing Page, eDetailer</option><option value="design">Design Team · iPDF, Print, Banner, Illustration, Poster, Social, WhatsApp</option><option value="web">Web Team · Website, Banner HTML</option><option value="video">Video Team · Video, GIF, animated/GIF banners</option><option value="qa">QA · all teams</option></select><small id="account-departments-help" class="muted">Team Managers, Auditors, and Executioners are limited to selected teams. Managers get full admin access; Leadership is global read-only.</small></label>
+              <button class="button primary" type="submit">Create team account</button>
+            </form></details>
+            <div id="accounts-list" class="account-list"></div>
+          </section>
+        </div>
+      </section>
+      <footer class="app-footer"><span>Creative Lab</span><span>Local network workspace · Data is stored on the host computer</span></footer>
+    </main>
+  </div>
+
+  <dialog id="assignment-alert-dialog" class="dialog">
+    <div class="dialog-card"><div class="dialog-heading"><h2>Your assignment alerts</h2><button type="button" class="icon-button" data-close="assignment-alert-dialog" aria-label="Close">×</button></div><div id="assignment-alert-list"></div></div>
+  </dialog>
+  <dialog id="project-dialog" class="dialog">
+    <form id="project-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">PROJECT DETAILS</p><h2 id="project-dialog-title">New project</h2></div><button type="button" class="icon-button" data-close="project-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="id">
+      <p id="project-source-priority" class="form-hint"></p>
+      <div class="form-grid">
+        <label>Project reference<input name="ref" maxlength="80" required></label>
+        <label>Assigned designer<select name="assignee"></select></label>
+        <label class="span-2">Project title<input name="title" maxlength="240" required></label>
+        <label>Market<input name="market" maxlength="100" placeholder="e.g. France"></label>
+        <label>Channel<input name="channel" maxlength="100" placeholder="e.g. Banner, Email, iPDF"></label>
+        <label>Production team / department<select name="productionTeamId" required><option value="unassigned">Unassigned · Manager triage</option><option value="email">Email Team</option><option value="design">Design Team</option><option value="web">Web Team</option><option value="video">Video Team</option><option value="qa">QA · all departments</option></select></label>
+        <label>Task type<select name="taskType"><option>Localization</option><option>New Build</option><option>Adaptation</option><option>Banner</option><option>Campaign</option><option>eDetailer</option><option>Email</option><option>Illustration</option><option>iPDF</option><option>Landing Page</option><option>Outbound WhatsApp [Not Yet Launched]</option><option>Poster</option><option>PPT/Gslide</option><option>Print</option><option>Social Media Post</option><option>Video</option><option>Website</option><option>Email Banner</option><option>Other</option></select></label>
+        <label>Request type<select name="requestType"><option>Standard</option><option>Rush</option><option>Retain</option></select></label>
+        <label>Pages / units<input name="pages" type="number" min="1" max="100000" value="1" required></label>
+        <label>Complexity<select name="complexity"><option value="0.7">Low · 0.7×</option><option value="1" selected>Medium · 1.0×</option><option value="1.5">High · 1.5×</option></select></label>
+        <label>Progress %<input name="progress" type="number" min="0" max="100" value="0" required></label>
+        <label>Status<select name="status"><option>Not Started</option><option>In Progress</option><option>In Review</option><option>Completed</option><option>On Hold</option><option>Archived</option></select></label>
+        <label>Turnaround date<input name="tatDate" type="date"></label>
+        <label>Due date<input name="dueDate" type="date" required></label>
+        <label class="span-2">Notes<textarea name="notes" rows="3" maxlength="2000"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="project-dialog">Cancel</button><button class="button primary" type="submit">Save project</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="worklog-dialog" class="dialog">
+    <form id="worklog-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">DAILY UPDATE</p><h2>Log work and progress</h2></div><button type="button" class="icon-button" data-close="worklog-dialog" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label class="span-2">Production task<select name="taskId" required></select></label>
+        <input name="projectId" type="hidden">
+        <label>Work date<input name="date" type="date" required></label>
+        <label>Hours<input name="hours" type="number" min="0.1" max="24" step="0.1" value="1" required></label>
+        <label>Phase<select name="phase"><option>Build</option><option>CR1</option><option>CR2</option><option>Bug Fixing</option><option>Quality Assurance</option><option>Other</option></select></label>
+        <label>Progress %<input name="progress" type="number" min="0" max="100" required></label>
+        <label class="span-2">Project status<select name="status"><option>Not Started</option><option selected>In Progress</option><option>In Review</option><option>Completed</option><option>On Hold</option></select></label>
+        <label class="span-2">Update / notes<textarea name="note" rows="3" maxlength="2000"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="worklog-dialog">Cancel</button><button class="button primary" type="submit">Save update</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="audit-dialog" class="dialog">
+    <form id="audit-form" class="dialog-card">
+      <div id="full-audit-clock" class="panel"><p class="muted">Start the audit clock after choosing a project. Closing this form does not stop it; Hold pauses and saves elapsed time.</p><button type="button" class="button secondary" id="start-full-audit-clock">Start audit clock</button></div>
+      <div class="dialog-heading"><div><p class="eyebrow">QUALITY WORKFLOW</p><h2>Record an asset audit</h2></div><button type="button" class="icon-button" data-close="audit-dialog" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Audit type<select name="auditType"><option>Audit</option><option>Pre-Audit</option></select></label>
+        <label>Project ID<input name="projectRef" list="audit-project-suggestions" maxlength="80" required><datalist id="audit-project-suggestions"></datalist></label>
+        <label class="span-2">Project name<input name="projectName" maxlength="240"></label>
+        <label>Market<select name="market" id="audit-market"><option value="">Choose market</option></select></label>
+        <input type="hidden" name="workfrontId">
+        <input type="hidden" name="crId">
+        <label>Channel<select name="channel"><option>Banner</option><option>Campaign</option><option>eDetailer</option><option>Email</option><option>Illustration</option><option>iPDF</option><option>Landing Page</option><option>Outbound WhatsApp [Not Yet Launched]</option><option>Poster</option><option>PPT/Gslide</option><option>Print</option><option>Social Media Post</option><option>Video</option><option>Website</option><option>Landing Pages</option><option>PPT</option><option>Gslide</option><option>AEM webpage</option><option>Banner-Static</option><option>Banner-GIF</option><option>Banner-HTML</option><option>Banner-Animated</option><option>Banner-GD</option></select></label>
+        <label>Primary DPM<input name="primaryDpm" id="audit-primary-dpm" maxlength="100"></label>
+        <label>Backup DPM<input name="backupDpm" id="audit-backup-dpm" maxlength="100"></label>
+        <label class="span-2">Secondary backup DPM<input name="secondaryBackupDpm" id="audit-secondary-backup-dpm" maxlength="100"></label>
+        <label class="checkbox-line span-2"><input name="primaryOnLeave" type="checkbox"> Primary DPM is on leave (include backup in the greeting)</label>
+        <label class="span-2">Greeting preview<input id="audit-greeting-preview" readonly></label>
+        <label>Request type<select name="requestType"><option>New Build</option><option>Localization</option><option>Update/Repurpose</option></select></label>
+        <label>Complexity<select name="complexity"><option>Simple</option><option>Medium</option><option>Complex</option></select></label>
+        <label id="minor-update-label" class="hidden">Minor update<select name="minorUpdate"><option>No</option><option>Yes</option></select></label>
+        <label>Page / frame count<input name="pageCount" type="number" min="1" max="100000" value="1" required></label>
+        <label>Start date<input name="startDate" type="date" required></label>
+        <label>Start time<input name="startTime" type="time" required></label>
+        <div class="span-2"><button id="calculate-audit-tat" class="button secondary" type="button">Calculate TAT &amp; ETA</button></div>
+        <label>Calculated TAT<input name="calculatedTat" readonly placeholder="Calculate TAT first"></label>
+        <label>ETA date<input name="etaDate" type="date" required></label>
+        <label>ETA time<input name="etaTime" type="time" min="12:30" max="21:30" required></label>
+        <input type="hidden" name="capacityRequested" value="false">
+        <div class="span-2"><button id="calculate-audit-capacity" class="button secondary" type="button">Estimate tentative delivery from capacity</button><p class="muted">Includes remaining local and Workfront workload. Separate from contractual TAT, source due date and material delivery.</p><div id="audit-capacity-result" aria-live="polite"></div></div>
+        <label><span id="audit-status-label">Audit status</span><select name="auditStatus"><option>Pending</option><option>Pass</option><option>Fail</option><option>Ready with Conditions</option><option>Not Ready</option></select></label>
+        <label>Source file<select name="sourceFile"><option>Available</option><option>Not available</option></select></label>
+        <label>Priority<select name="priority"><option>Normal</option><option>Low</option><option>High</option><option>Urgent</option></select></label>
+        <label class="span-2">Observations<textarea name="observations" rows="3" maxlength="5000" placeholder="One observation per line"></textarea></label>
+        <label class="span-2">Dependencies<textarea name="dependencies" rows="2" maxlength="3000" placeholder="One dependency per line"></textarea></label>
+        <div id="audit-only-fields" class="form-grid span-2">
+          <label>Output format<select name="outputFormat"><option value="">Choose format</option><option>Print</option><option>iPDF</option><option>Banner</option><option>PPT</option><option>GSlide</option><option>Other</option></select></label>
+          <label>Functional document<input name="functionalDoc" maxlength="1000"></label>
+          <label>Style guide document<input name="styleGuideDoc" maxlength="1000"></label>
+          <label>Email sign-off name<input name="signOffName" maxlength="100" autocomplete="name"></label>
+          <label class="span-2">Requirements<textarea name="requirements" rows="3" maxlength="5000" placeholder="One requirement per line"></textarea></label>
+        </div>
+        <div class="span-2"><div class="panel-heading document-heading"><div><strong>Input documents</strong><p class="muted">Attach multiple source files or briefs.</p></div><button id="add-audit-document" class="button secondary" type="button">＋ Add document</button></div><div id="audit-documents" class="document-list"></div></div>
+      </div>
+      <p class="form-hint">Auditor name is recorded from your signed-in account. TAT is calculated using the original channel / request / complexity matrix and the configured business holidays.</p>
+      <div class="template-actions"><button id="generate-audit-template" class="button secondary" type="button">Generate email template</button><button id="copy-audit-template" class="button secondary hidden" type="button">Copy template</button></div>
+      <div id="audit-template-preview" class="template-preview hidden" aria-live="polite"></div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="audit-dialog">Cancel</button><button class="button primary" type="submit">Save audit</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="market-matrix-dialog" class="dialog wide-dialog">
+    <form id="market-matrix-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">ROUTING &amp; BUSINESS CALENDAR</p><h2>Market / DPM backup matrix</h2></div><button type="button" class="icon-button" data-close="market-matrix-dialog" aria-label="Close">×</button></div>
+      <p class="form-hint">Update market ownership and backup contacts as needed. Holiday dates are excluded from change-round ETAs; weekends are always excluded. Project TAT dates are not changed by this matrix.</p>
+      <div class="matrix-toolbar"><strong id="matrix-row-count"></strong><button id="add-market-row-button" type="button" class="button secondary">＋ Add market</button></div>
+      <div id="market-matrix-rows" class="matrix-rows"></div>
+      <section class="holiday-section">
+        <div class="panel-heading"><div><h3>Business holidays</h3><p class="muted">Low and Medium: 1 business day · High: 3 business days</p></div></div>
+        <div class="holiday-add-row"><label>Holiday name<input id="holiday-name" maxlength="120" placeholder="e.g. Studio closure"></label><label>Date<input id="holiday-date" type="date"></label><button id="add-holiday-button" type="button" class="button secondary">Add holiday</button></div>
+        <div id="holiday-list" class="holiday-list"></div>
+      </section>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="market-matrix-dialog">Close</button><button class="button primary" type="submit">Save matrix &amp; calendar</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="allocation-dialog" class="dialog">
+    <form id="allocation-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">AUDIT PASSED</p><h2>Allocate the project task</h2></div><button type="button" class="icon-button" data-close="allocation-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="projectId"><input type="hidden" name="auditId">
+      <p id="allocation-project-label" class="form-hint"></p>
+      <div class="form-grid">
+        <label>Assign designer<select name="assignee" required></select></label>
+        <label>Confirm / update due date<input name="dueDate" type="date" required></label>
+        <label>Planned start date<input name="plannedStartDate" type="date" required></label>
+        <label>Start time<input name="startTime" type="time" required></label>
+      </div>
+      <p id="allocation-effort" class="allocation-effort"></p>
+      <div id="resource-suggestions" class="resource-suggestions"></div>
+      <p id="allocation-tat-label" class="form-hint"></p>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="allocation-dialog">Do this later</button><button class="button primary" type="submit">Save task allocation</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="workfront-allocation-dialog" class="dialog">
+    <form id="workfront-allocation-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">PRE-AUDIT PASSED</p><h2>Allocate Workfront project</h2></div><button type="button" class="icon-button" data-close="workfront-allocation-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="workfrontId">
+      <p id="workfront-allocation-label" class="form-hint"></p>
+      <div class="form-grid"><label>Assign designer<select name="assignee" required></select></label><label>Planned start date<input name="plannedStartDate" type="date" required></label><label>Start time<input name="startTime" type="time" min="11:30" max="21:30" required></label></div>
+      <p id="workfront-allocation-effort" class="allocation-effort"></p>
+      <div id="workfront-resource-suggestions" class="resource-suggestions"></div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="workfront-allocation-dialog">Cancel</button><button class="button primary" type="submit">Allocate &amp; add to Gantt</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="workfront-rework-dialog" class="dialog">
+    <form id="workfront-rework-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">QA / CLIENT FEEDBACK</p><h2>Open another work round</h2></div><button type="button" class="icon-button" data-close="workfront-rework-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="workfrontId">
+      <div class="form-grid">
+        <label>Task category<select name="category"><option>Bug Fixing</option><option>CR</option></select></label>
+        <label id="workfront-rework-scope-wrap">Bug fixes for<select name="bugScope"><option>Build</option><option>CR</option></select></label>
+        <label id="workfront-rework-cr-wrap" class="hidden">CR ID<input name="crId" maxlength="80" placeholder="CR1"></label>
+        <label>Complexity<select name="complexity"><option>Low</option><option selected>Medium</option><option>High</option></select></label>
+        <label>Assign designer<select name="assignee" required></select></label>
+        <label>Start date<input name="startDate" type="date" required></label>
+        <label>Start time<input name="startTime" type="time" min="11:30" max="21:30" required></label>
+        <label class="span-2">Observation / scope<textarea name="observations" rows="3" maxlength="2000" required></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="workfront-rework-dialog">Cancel</button><button class="button primary" type="submit">Create rework task</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="change-round-dialog" class="dialog">
+    <form id="change-round-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">CHANGE REQUEST</p><h2>Record a change round</h2></div><button type="button" class="icon-button" data-close="change-round-dialog" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label class="span-2">Project ID<select name="projectRef" required></select></label>
+        <label>CR ID<input name="crId" maxlength="80" required placeholder="e.g. CR1"></label>
+        <label>Complexity<select name="complexity"><option>Low</option><option>Medium</option><option>High</option></select></label>
+        <label>Landed date<input name="landedDate" type="date" required></label>
+        <label>Landed time<input name="landedTime" type="time" required></label>
+        <label>Assign designer<select name="assignee"></select></label>
+        <label>Priority<select name="priority"><option>Normal</option><option>Low</option><option>High</option><option>Urgent</option></select></label>
+        <label>Priority order<select name="priorityOrder"><option value="1">1 · Highest</option><option value="2">2</option><option value="3" selected>3 · Normal</option><option value="4">4</option><option value="5">5 · Lowest</option></select></label>
+        <label>Task status<select name="status"><option>Not Started</option><option>In Progress</option><option>In Review</option><option>Completed</option><option>On Hold</option></select></label>
+        <label class="checkbox-line span-2"><input name="etaOverride" type="checkbox"> Override capacity ETA for this CR</label>
+        <label>Capacity ETA date<input name="etaDate" type="date"></label>
+        <label>Capacity ETA time<input name="etaTime" type="time"></label>
+        <label class="span-2">Calculated ETA<input id="change-round-eta" readonly></label>
+      </div>
+      <p class="form-hint">Low and Medium take one business day; High takes three. The ETA keeps the landed time. Weekends and configured holidays are skipped.</p>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="change-round-dialog">Cancel</button><button class="button primary" type="submit">Save change round</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="task-dialog" class="dialog">
+    <form id="task-form" class="dialog-card">
+      <div class="dialog-heading"><div><p class="eyebrow">PRODUCTION TASK</p><h2 id="task-dialog-title">Add CR / Bug Fixing task</h2></div><button type="button" class="icon-button" data-close="task-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="id">
+      <p id="task-source-priority" class="form-hint"></p>
+      <div class="form-grid">
+        <label>Task category<select name="category"><option value="Build">Build</option><option value="CR">CR</option><option value="Bug Fixing">Bug Fixing</option></select></label>
+        <label>Project ID<select name="projectId" required></select></label>
+        <label id="task-cr-id-wrap">CR ID<input name="crId" maxlength="80" placeholder="CR1"></label>
+        <label id="task-bug-scope-wrap" class="hidden">Bug fixes for<select name="bugScope"><option>Build</option><option>CR</option></select></label>
+        <label>Complexity<select name="complexity"><option>Low</option><option>Medium</option><option>High</option></select></label>
+        <label>Pages / units<input name="units" type="number" min="0.1" step="0.1" value="1" required></label>
+        <label>Assign designer<select name="assignee"></select></label>
+        <label>Priority<select name="priority"><option>Normal</option><option>Low</option><option>High</option><option>Urgent</option></select></label>
+        <label>Priority order<select name="priorityOrder"><option value="1">1 · Highest</option><option value="2">2</option><option value="3" selected>3 · Normal</option><option value="4">4</option><option value="5">5 · Lowest</option></select></label>
+        <label>Task status<select name="status"><option>Not Started</option><option>In Progress</option><option>In Review</option><option>Completed</option><option>On Hold</option></select></label>
+        <label>Planned start date<input name="startDate" type="date" required></label>
+        <label>Planned start time<input name="startTime" type="time" required></label>
+        <label class="checkbox-line span-2"><input name="etaOverride" type="checkbox"> Override capacity ETA (Manager/Auditor only)</label>
+        <label>Capacity ETA date<input name="etaDate" type="date" required></label>
+        <label>Capacity ETA time<input name="etaTime" type="time" required></label>
+        <label class="span-2">Task description<input name="title" maxlength="240" placeholder="Optional task note"></label>
+        <label class="span-2">Observations / task notes<textarea name="observations" rows="2" maxlength="2000"></textarea></label>
+      </div>
+      <p id="task-estimate-preview" class="allocation-effort"></p>
+      <div class="dialog-actions"><button type="button" class="button secondary" data-close="task-dialog">Cancel</button><button class="button primary" type="submit">Save production task</button></div>
+    </form>
+  </dialog>
+  <dialog id="execution-checklist-dialog" class="wide-dialog">
+    <form id="execution-checklist-form">
+      <div class="dialog-heading"><h2>Self-QC checklist &amp; QA handoff</h2><button type="button" class="icon-button" data-close="execution-checklist-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="deliveryKey"><p id="execution-checklist-project"></p>
+      <p id="execution-checklist-source" class="muted"></p>
+      <div id="execution-checklist-items"></div><button id="execution-checklist-add" class="button secondary" type="button">Add check</button>
+      <div class="form-grid">
+        <section class="span-2"><h3>Input files</h3><div id="handoff-inputDocuments"></div><button type="button" class="button secondary" data-add-document="inputDocuments">Add input file</button></section>
+        <section class="span-2"><h3>Output files</h3><div id="handoff-outputDocuments"></div><button type="button" class="button secondary" data-add-document="outputDocuments">Add output file</button></section>
+        <label>Functional document URL<input name="functionalLink" type="url" maxlength="2000"></label><label>Style guide URL<input name="styleLink" type="url" maxlength="2000"></label>
+        <label class="span-2">Uploaded checklist URL<input name="checklistLink" type="url" maxlength="2000"></label>
+        <label class="span-2">Observations<textarea name="observations" rows="4" maxlength="4000"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button class="button primary" type="submit">Save checklist</button><button id="execution-checklist-download" class="button secondary" type="button">Download checklist (.xlsx)</button><button id="execution-handoff-copy" class="button secondary" type="button">Copy handoff for Workfront</button><button id="execution-handoff-download" class="button secondary" type="button">Download QA handoff (.eml)</button></div><div id="execution-handoff-preview" class="panel hidden"></div>
+    </form>
+  </dialog>
+  <dialog id="quality-result-dialog">
+    <form id="quality-result-form">
+      <div class="dialog-heading"><h2>Confirm QA result</h2><button type="button" class="icon-button" data-close="quality-result-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="deliveryKey"><label>Result<select name="result"><option>Pass</option><option>Rework</option></select></label>
+      <label>QA evidence date<input name="date" type="date" min="2026-07-01" required></label>
+      <label class="checkbox-line"><input type="checkbox" name="firstTime"> QA confirms first-time-right (no rework)</label>
+      <label>QA evidence / note<textarea name="note" maxlength="2000" required></textarea></label>
+      <div class="dialog-actions"><button class="button primary" type="submit">Confirm result</button></div>
+    </form>
+  </dialog>
+  <dialog id="feedback-response-dialog"><form id="feedback-response-form"><div class="dialog-heading"><h2>Manager response / best practice</h2><button type="button" class="icon-button" data-close="feedback-response-dialog" aria-label="Close">×</button></div><input name="id" type="hidden"><label>Status<select name="status"><option>Reviewed</option><option>Actioned</option><option>Open</option></select></label><label>Response / solution<textarea name="response" maxlength="4000" required></textarea></label><label class="checkbox-line"><input type="checkbox" name="bestPractice"> Publish as a team best practice (Challenges must be Actioned)</label><label>Best-practice title<input name="practiceTitle" maxlength="240"></label><button class="button primary" type="submit">Save response</button></form></dialog>
+  <dialog id="kpi-review-dialog" class="wide-dialog"><form id="kpi-review-form"><div class="dialog-heading"><h2>Manager KPI review</h2><button type="button" class="icon-button" data-close="kpi-review-dialog" aria-label="Close">×</button></div><input type="hidden" name="memberId"><input type="hidden" name="date"><p id="kpi-review-member"></p><div id="kpi-feedback-criteria"></div>
+    <input type="hidden" name="period" value="quarterly"><p class="muted">Monthly reviews confirm quarter-to-date coverage through the displayed as-of date; quarterly reviews confirm the full quarter. The same approved quarterly thresholds apply. These reviews are stored separately.</p>
+    <label class="checkbox-line"><input type="checkbox" name="qualityVerified"> Quality evidence reviewed (including audit-quality issues where applicable)</label><label class="checkbox-line"><input type="checkbox" name="deliveryVerified"> Delivery timelines / audit-delay evidence reviewed</label><label class="checkbox-line"><input type="checkbox" name="processVerified"> Workflow, checklist and compliance evidence reviewed</label><label class="checkbox-line"><input type="checkbox" name="coverageConfirmed"> Historical evidence coverage and peer benchmark confirmed complete for this quarter</label><label>Overall approved rating<select name="overallRating"><option value="">Not reviewed</option><option value="5">5 · Excellent</option><option value="4">4 · Good / Above Average</option><option value="3">3 · Average / Meets expectations</option><option value="2">2 · Needs improvement</option><option value="1">1 · Poor / Unsatisfactory</option></select></label><label>Review evidence / comments<textarea name="note" maxlength="4000" required></textarea></label><label class="checkbox-line"><input type="checkbox" name="finalized"> Confirm final review (later performance changes require re-review)</label><button class="button primary" type="submit">Save review</button></form></dialog>
+  <dialog id="execution-progress-dialog"><form id="execution-progress-form"><div class="dialog-heading"><h2>Update assignment progress</h2><button type="button" class="icon-button" data-close="execution-progress-dialog" aria-label="Close">×</button></div><input name="deliveryKey" type="hidden"><p id="execution-progress-title"></p><p class="muted">No extra hours are logged here. Use the timer for actual time. Stop the timer before marking work 100% complete. This updates the local execution record, not Workfront.</p><label>Date<input name="date" type="date" min="2026-07-01" required></label><label>Progress %<input name="progress" type="number" min="0" max="100" required></label><label>Status<select name="status"><option>In Progress</option><option>Not Started</option><option>In Review</option><option>On Hold</option></select></label><label>Update / evidence<textarea name="note" maxlength="2000" required></textarea></label><button class="button primary" type="submit">Save progress</button></form></dialog>
+  <dialog id="kpi-withdraw-dialog"><form id="kpi-withdraw-form"><h2>Withdraw KPI issue</h2><input type="hidden" name="id"><label>Reason<textarea name="reason" maxlength="2000" required></textarea></label><div class="dialog-actions"><button class="button secondary" type="button" data-close="kpi-withdraw-dialog">Cancel</button><button class="button primary" type="submit">Withdraw</button></div></form></dialog>
+  <dialog id="kpi-publish-dialog"><form id="kpi-publish-form"><h2>Publish member KPI report</h2><input name="memberId" type="hidden"><input name="date" type="hidden"><input name="period" type="hidden"><p id="kpi-publish-label"></p><label>Publication / revision note<textarea name="note" maxlength="4000" required></textarea></label><label class="checkbox-line"><input name="allowIncomplete" type="checkbox"> Publish explicitly as provisional if the period is open or evidence is incomplete</label><div class="dialog-actions"><button type="button" class="button secondary" data-close="kpi-publish-dialog">Cancel</button><button type="submit" class="button primary">Publish new version</button></div></form></dialog>
+  <dialog id="kpi-recall-dialog"><form id="kpi-recall-form"><h2>Recall published KPI</h2><input name="id" type="hidden"><label>Reason<textarea name="reason" maxlength="2000" required></textarea></label><div class="dialog-actions"><button type="button" class="button secondary" data-close="kpi-recall-dialog">Cancel</button><button type="submit" class="button primary">Recall report</button></div></form></dialog>
+  <dialog id="hygiene-verify-dialog"><form id="hygiene-verify-form"><h2>Edit local process verification</h2><input name="projectRef" type="hidden"><p id="hygiene-verify-project"></p><p class="muted">Change one or more field statuses and record evidence. This does not edit Workfront. Recheck removes manual statuses and uses the latest import.</p><div id="hygiene-verify-checks"></div><label>Observed audited values and supporting evidence<textarea name="note" maxlength="4000" required></textarea></label><div class="dialog-actions"><button type="button" class="button secondary" data-close="hygiene-verify-dialog">Cancel</button><button class="button primary" type="submit">Save manual verification</button></div></form></dialog>
+  <dialog id="cr-audit-dialog"><form id="cr-audit-form"><h2>CR audit</h2><input name="roundId" type="hidden"><p id="cr-audit-label"></p><p class="muted">Project metadata is filled automatically. Low / Medium: 1 business day; High: 3 business days, excluding holidays. Parent project is never completed by a CR audit.</p><label>CR complexity<select name="complexity"><option value="Simple">Low</option><option value="Medium">Medium</option><option value="Complex">High</option></select></label><label>Execution start date<input name="startDate" type="date" required></label><label>Notes<textarea name="note" maxlength="4000"></textarea></label><div id="cr-audit-clock"></div><div class="dialog-actions"><button type="button" class="button secondary" data-close="cr-audit-dialog">Close (clock stays active; Hold to pause)</button><button type="submit" class="button primary">Save audit &amp; calculate ETA</button></div><p id="cr-audit-result" role="status"></p></form></dialog>
+  <dialog id="weekly-qa-review-dialog"><form id="weekly-qa-review-form"><h2>Verify / correct FTR / Bug</h2><input name="rowId" type="hidden"><p id="weekly-qa-review-source"></p><label>Workfront ID / project reference<input name="projectRef" maxlength="80" required></label><label>Original executor<select name="executor" required></select></label><label id="weekly-qa-review-cr">Individual CR ID<input name="crId" maxlength="80"></label><label>KPI result<select name="bugCreated"><option value="bug">Quality issue / Bug — FTR failure</option><option value="ftr">FTR pass — not a quality miss</option></select></label><label id="weekly-qa-review-alias" class="checkbox-line hidden"><input name="aliasConfirmed" type="checkbox"> I verified this is the original executor, not just the bug worker</label><label class="checkbox-line"><input name="exclude" type="checkbox"> Exclude this row from KPI</label><label>Review / exclusion reason<textarea name="note" maxlength="4000" required></textarea></label><div class="dialog-actions"><button type="button" class="button secondary" data-close="weekly-qa-review-dialog">Cancel</button><button type="submit" class="button primary">Save correction</button></div></form></dialog>
+  <dialog id="weekly-qa-action-dialog"><form id="weekly-qa-action-form"><h2 id="weekly-qa-action-title"></h2><input name="action" type="hidden"><label>Publication / revision / recall note<textarea name="note" maxlength="4000" required></textarea></label><div class="dialog-actions"><button type="button" class="button secondary" data-close="weekly-qa-action-dialog">Cancel</button><button type="submit" class="button primary">Confirm</button></div></form></dialog>
+</body>
+</html>

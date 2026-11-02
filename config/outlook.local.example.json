@@ -1,0 +1,5 @@
+{
+  "tenantId": "PASTE-MICROSOFT-ENTRA-TENANT-ID",
+  "clientId": "PASTE-APPLICATION-CLIENT-ID",
+  "clientSecret": "PASTE-CLIENT-SECRET-FROM-IT"
+}

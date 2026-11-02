@@ -1,0 +1,935 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "assetType": "Banner",
+      "source": "Checklist_Banner.xlsx",
+      "items": [
+        {
+          "id": "Banner:Banner:3",
+          "section": "Banner",
+          "label": "Banner Name, naming convention as per Brand guidelines",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:4",
+          "section": "Banner",
+          "label": "VVPM Approval Code added in banner",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:5",
+          "section": "Banner",
+          "label": "Page look and Background should be as per Mockup/Input file",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:6",
+          "section": "Banner",
+          "label": "Content as per copy Mockup/Input or translated file provided",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:7",
+          "section": "Banner",
+          "label": "Banner dimension should be as per brief.",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:8",
+          "section": "Banner",
+          "label": "All links are working fine & added as per provided brief (without url defence link appended to it)",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:9",
+          "section": "Banner",
+          "label": "Layout/design\r\nThe placement of the elements, text, images, etc. should be exactly as per the storyboard and the approved version of the banner (approved PDF).",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:10",
+          "section": "Banner",
+          "label": "check superscript/subscript, copyright, trademark, etc.tags are added wherever required",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:11",
+          "section": "Banner",
+          "label": "Font style, Size, Color & Line hight should be as per Brand guidelines or else provided in Mockup/Input file",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:12",
+          "section": "Banner",
+          "label": "Is there a QR Scan code. If Yes, then please check and confirm is it working fine.",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:13",
+          "section": "Banner",
+          "label": "Check the Animation for GIF Banner as per Input file. ( Its animation style pop in,fade in, fade out and its sequence should match with Input file with respect to exact time frames.",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:14",
+          "section": "Banner",
+          "label": "Check for bg-exit script in source code for HTML banner (Staticks & GIF) as per the requirment. (Go to page source and search for the bg-exit)",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:15",
+          "section": "Banner",
+          "label": "Cross Browsing\r\nTest the banner in Safari (macOS), Firefox, Chrome, and Edge for desktop formats. And for mobile formats use Chrome on Android and Safari on iPhone.",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:16",
+          "section": "Banner",
+          "label": "Backup image Always place backup image in the animated banners under 40kb size limit",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Banner:17",
+          "section": "Banner",
+          "label": "Files should be placed in a proper folder structure it should be organised",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:3",
+          "section": "Graphics Audit",
+          "label": "Design Element (Creative assets):",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:4",
+          "section": "Graphics Audit",
+          "label": "All scenes are included with individual layers for images, graphs, text, overlay and reference text",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:5",
+          "section": "Graphics Audit",
+          "label": "Editable Artwork Files are provided",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:6",
+          "section": "Graphics Audit",
+          "label": "One InDesign / PSD file per Slide",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:7",
+          "section": "Graphics Audit",
+          "label": "Correct resolution to support retina display",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:8",
+          "section": "Graphics Audit",
+          "label": "Fonts package and links provided in case of Indesigns",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:9",
+          "section": "Graphics Audit",
+          "label": "Fonts: (Styleguide)",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:10",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure to get Font details like font family, font size and font style.",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:11",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure that acceptable backup fonts are also specified",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:12",
+          "section": "Graphics Audit",
+          "label": "Is any Font missing? (Yes/No) (If Yes --- Provide list of Fonts below)",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:13",
+          "section": "Graphics Audit",
+          "label": "List of missing Fonts:",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:14",
+          "section": "Graphics Audit",
+          "label": "Alternate Font used: (Provide list of original font and alternate font used)",
+          "detail": ""
+        },
+        {
+          "id": "Banner:Graphics Audit:15",
+          "section": "Graphics Audit",
+          "label": "Approval to use alternate Fonts (Yes/No): (DPM approval is required to use alternate fonts)",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "assetType": "iPDF",
+      "source": "Checklist_iPdf.xlsx",
+      "items": [
+        {
+          "id": "iPDF:iPDF:4",
+          "section": "iPDF",
+          "label": "VVPM-code: The VVPM of the asset matches the one on the task description on workfront.",
+          "detail": "Should be correct and postion as per input"
+        },
+        {
+          "id": "iPDF:iPDF:5",
+          "section": "iPDF",
+          "label": "File format: The deliverable file format matches the format of the asset requested.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:6",
+          "section": "iPDF",
+          "label": "File name: 1796286_iPDF_Czech Republic_Columvi_dosing card_D1, 1796286_iPDF_Czech Republic_Columvi_dosing card_D1_v2,1796286_iPDF_Czech Republic_Columvi_dosing card_CR1",
+          "detail": "TicketNo_iPDF_TicketName_Round_Version"
+        },
+        {
+          "id": "iPDF:iPDF:7",
+          "section": "iPDF",
+          "label": "Feedback: Client feedback has been applied correctly",
+          "detail": "Make sure to use it as a reference to check, the comments and feedback received since the last QA-approved or brief"
+        },
+        {
+          "id": "iPDF:iPDF:8",
+          "section": "iPDF",
+          "label": "Feedback: Team feedback has been applied correctly",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:9",
+          "section": "iPDF",
+          "label": "Layout / Design / Content: The placement of the elements, texts, and images should be exactly as per the reference document or approved version of the piece on  (check read-only and spread versions)",
+          "detail": "Typically, we don't make alterations in a piece of approved version. However, if we discover an obvious error, we can flag it. But this requires prior agreement with the PM and/or CP. We can't make changes only based on production considerations at this stage."
+        },
+        {
+          "id": "iPDF:iPDF:10",
+          "section": "iPDF",
+          "label": "Layout / Design / Content: Alignment and spacing: The alignment and spacing of the elements should be accurate and consistent, for example, we have to make sure that elements that look centered are in fact centered (unless it is intentional)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:11",
+          "section": "iPDF",
+          "label": "Layout / Design / Content: The elements are neatly placed, for example, the lines of the tables end as expected, and the image border doesn´t exceed the expected placement",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:12",
+          "section": "iPDF",
+          "label": "Layout / Design / Content: The contents match the index",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:13",
+          "section": "iPDF",
+          "label": "Layout / Design / Content: Page numbers correspond to the index",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:14",
+          "section": "iPDF",
+          "label": "Date: The date should be updated or if not asked to update must match with input files.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:15",
+          "section": "iPDF",
+          "label": "Content: The copy should match that of the approved version provided by client.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:16",
+          "section": "iPDF",
+          "label": "Quality: All the graphic elements should be of the best possible quality unless it is intentional to reduce the file size.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:17",
+          "section": "iPDF",
+          "label": "Color: The colors are set RGB for iPDF digital or CMYK for Print iPDF",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:19",
+          "section": "iPDF",
+          "label": "Fonts / Formatting: The fonts used are the same as the version approved",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:20",
+          "section": "iPDF",
+          "label": "Fonts / Formatting: All font sizes must be consistent",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:21",
+          "section": "iPDF",
+          "label": "Fonts / Formatting: The asset formatting is consistent (ie, size, leading, etc.)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:22",
+          "section": "iPDF",
+          "label": "Images / Logos: All images should be of the best quality possible",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:23",
+          "section": "iPDF",
+          "label": "Images / Logos: The logos are not pixelated",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:24",
+          "section": "iPDF",
+          "label": "Images / Logos: Logos cannot be cut off or without a safety margin and must match brand guidelines",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:25",
+          "section": "iPDF",
+          "label": "QR Codes: The destination URL linked to the QR code is the right one",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:26",
+          "section": "iPDF",
+          "label": "QR Codes: If the URL is correct but the webpage is not live please leave a comment on Jira",
+          "detail": "Usually, the QR Codes on assets land the user on a webpage, the process below describes this scenario, if you have a different one, please contact the PC."
+        },
+        {
+          "id": "iPDF:iPDF:27",
+          "section": "iPDF",
+          "label": "QR Codes: Links go directly to the page or the required information, without going through third-party pages or advertising of any kind",
+          "detail": "Not all the pieces have a QR code, but if the piece you are checking has it, please do the following:"
+        },
+        {
+          "id": "iPDF:iPDF:28",
+          "section": "iPDF",
+          "label": "QR Codes: The QR codes have no decoration elements on it",
+          "detail": "Make sure you have a backup to check against, it is generally provided to us"
+        },
+        {
+          "id": "iPDF:iPDF:29",
+          "section": "iPDF",
+          "label": "QR Codes: The QR code is not cut on the borders",
+          "detail": "Scan the QR using a smartphone"
+        },
+        {
+          "id": "iPDF:iPDF:30",
+          "section": "iPDF",
+          "label": "QR Codes: Must be scan properly",
+          "detail": "If the result is an error page make sure the landing page is available, reach out to the PM with the error message to make sure this is a known issue due to the webpage is not live yet"
+        },
+        {
+          "id": "iPDF:iPDF:31",
+          "section": "iPDF",
+          "label": "QR Codes: Color contrast is enough to scan correctly",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:32",
+          "section": "iPDF",
+          "label": "Measurements (if applicable): The width, height  match with the Brief and input.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:33",
+          "section": "iPDF",
+          "label": "Links / CTAs: Links must:",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:34",
+          "section": "iPDF",
+          "label": "Links / CTAs: Be live, if the URL is correct but the webpage is not live please leave a comment on Jira",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:35",
+          "section": "iPDF",
+          "label": "Links / CTAs: Take the user to the corresponding site",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:36",
+          "section": "iPDF",
+          "label": "Links / CTAs: Be consistent with brief and/or original asset",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:37",
+          "section": "iPDF",
+          "label": "Links / CTAs: Not take the user to a different brand, unless it is specified on the brief",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:38",
+          "section": "iPDF",
+          "label": "Interactivity: All navigation links take the user to the corresponding page/page point",
+          "detail": "Many iPDFs assets have interactivity, meaning that the user can navigate through the piece. The asset could have:"
+        },
+        {
+          "id": "iPDF:iPDF:39",
+          "section": "iPDF",
+          "label": "Interactivity: If the copy mentions a page number on the link or next to it, it should correspond to the actual page number",
+          "detail": "A table of contents with interactivity"
+        },
+        {
+          "id": "iPDF:iPDF:40",
+          "section": "iPDF",
+          "label": "Interactivity: Pop-ups correspond to the brief specifications",
+          "detail": "Navigation elements. This includes:"
+        },
+        {
+          "id": "iPDF:iPDF:41",
+          "section": "iPDF",
+          "label": "Interactivity: Navigation buttons (home page button, table of contents button, arrows, etc.)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:42",
+          "section": "iPDF",
+          "label": "Interactivity: Navigation menu",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:43",
+          "section": "iPDF",
+          "label": "Interactivity: Pop-ups",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:44",
+          "section": "iPDF",
+          "label": "Interactivity: Jump links",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:45",
+          "section": "iPDF",
+          "label": "Interactivity: Note 1: Be mindful that the client can request changes to the interactivity. Read the comments on Jira to confirm if we are adding or removing buttons, CTAs, jump links, or pop-ups.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:46",
+          "section": "iPDF",
+          "label": "Interactivity: Note 2: Pay close attention to the table of contents, if we have either added or removed a page to check if the shown page number matches the real page number.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:iPDF:47",
+          "section": "iPDF",
+          "label": "Brand Guide: Check complete document",
+          "detail": "Check Color, Font, Logo, Images and ther elements as per brand guide"
+        },
+        {
+          "id": "iPDF:iPDF:48",
+          "section": "iPDF",
+          "label": "Must be checked: In france VVPM code should have version as well. (The version should be in e.g \"1.0 or 2.0\" and more on, but should not be sub type as \"1.1 or 2.2\")",
+          "detail": "For France"
+        },
+        {
+          "id": "iPDF:Graphics Audit:3",
+          "section": "Graphics Audit",
+          "label": "Design Element (Creative assets):",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:4",
+          "section": "Graphics Audit",
+          "label": "All scenes are included with individual layers for images, graphs, text, overlay and reference text",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:5",
+          "section": "Graphics Audit",
+          "label": "Editable Artwork Files are provided",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:6",
+          "section": "Graphics Audit",
+          "label": "One InDesign / PSD file per Slide",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:7",
+          "section": "Graphics Audit",
+          "label": "Correct resolution to support retina display",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:8",
+          "section": "Graphics Audit",
+          "label": "Fonts package and links provided in case of Indesigns",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:9",
+          "section": "Graphics Audit",
+          "label": "Fonts: (Styleguide)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:10",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure to get Font details like font family, font size and font style.",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:11",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure that acceptable backup fonts are also specified",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:12",
+          "section": "Graphics Audit",
+          "label": "Is any Font missing? (Yes/No) (If Yes --- Provide list of Fonts below)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:13",
+          "section": "Graphics Audit",
+          "label": "List of missing Fonts:",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:14",
+          "section": "Graphics Audit",
+          "label": "Alternate Font used: (Provide list of original font and alternate font used)",
+          "detail": ""
+        },
+        {
+          "id": "iPDF:Graphics Audit:15",
+          "section": "Graphics Audit",
+          "label": "Approval to use alternate Fonts (Yes/No): (DPM approval is required to use alternate fonts)",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "assetType": "Print",
+      "source": "Checklist_Print.xlsx",
+      "items": [
+        {
+          "id": "Print:Print:3",
+          "section": "Print",
+          "label": "File format / Dimensions: • Check and confirm the required source and deliverable file format\r\n• Verify the piece dimensions/Size",
+          "detail": ""
+        },
+        {
+          "id": "Print:Print:4",
+          "section": "Print",
+          "label": "Materials: Check if all the needed materials are provided (source files, links, fonts, etc.)",
+          "detail": ""
+        },
+        {
+          "id": "Print:Print:5",
+          "section": "Print",
+          "label": "File name: 1796286_Print_Czech Republic_Columvi_dosing card_D1",
+          "detail": "TicketNo_Print_TicketName_Round_Version"
+        },
+        {
+          "id": "Print:Print:6",
+          "section": "Print",
+          "label": "Color / Color profile: The colors should be in CMYK format",
+          "detail": ""
+        },
+        {
+          "id": "Print:Print:7",
+          "section": "Print",
+          "label": "Layout / Design: 1.\tAlignment and spacing: All the elements on the piece, such as texts, images, or graphic elements, should be exactly consistent and aligned to the margins/guides or with each other. Spacing of the elements should be accurate and consistent too (unless it is intentional)\r\n2.\tThe elements should be neatly placed, for example, the lines of the tables end as expected, and the images border doesn´t exceed the expected placement",
+          "detail": "If we start an asset design from scratch, we have to pay a lot of attention to the content alignment and general design layout.\r\nIf we discover an obvious error on the alignment and on the general layout on an inherited piece, we can request to correct it. But this requires prior agreement with the PM and/or CP. If the alignment or layout error is minimum, we should correct it without previous notification."
+        },
+        {
+          "id": "Print:Print:8",
+          "section": "Print",
+          "label": "Measurements: Make sure the width, height, margins, and safe area match the Brief\r\n•\tRemember to use Inches*\r\n•\tFor big prints, standard scales could be used  \r\no\t25%, 50%, 100%\r\no\t1 inch = 2 inches (1\" = 2\")\r\no\t1 inch = 4 inches (1\" = 4\")\r\no\t1 inch = 1 foot (1\" = 12\")\r\n*In the US, a period (.) is used to separate decimals in measurements",
+          "detail": "Check Document Size"
+        },
+        {
+          "id": "Print:Print:9",
+          "section": "Print",
+          "label": "Fonts / Formatting / Content: 1.\tThe fonts used must be those allowed by the brand\r\n2.\tAll font sizes must be consistent\r\n3.\tThe asset formatting must be consistent (size, leading, etc.)\r\n\r\n4.\tAvoid multiple returns/widows/double spaces\r\n5.\tPlace bullets/superscripts/trademarks correctly\r\n6.\tHyphenation must be turned off\r\n7.\tLook for unwanted line brakes (Brand names, units, etc.)",
+          "detail": "Adobe Creative Cloud fonts must be always activated"
+        },
+        {
+          "id": "Print:Print:10",
+          "section": "Print",
+          "label": "Quality: The quality of the asset should be best possible quality unless it is intentional to reduce the file size.",
+          "detail": ""
+        },
+        {
+          "id": "Print:Print:11",
+          "section": "Print",
+          "label": "Images / Logos: 1.\tAll images should be of the best quality possible (from 300 dpi to 450 dpi if possible)* and on CMYK mode\r\n\r\n2.\tThe logos must be vectors, not pixelated format\r\n3.\tLogos cannot be cut off and must match brand guidelines",
+          "detail": ""
+        },
+        {
+          "id": "Print:Print:12",
+          "section": "Print",
+          "label": "QR Codes: 1.\tThe QR codes have no decoration elements on it\r\n2.\tThe QR code is not cut on the borders\r\n\r\n3.\tColor contrast is enough to scan correctly",
+          "detail": "1.\tMake sure you have a backup to check against, it is generally provided to us\r\n2.\tScan the QR using a smartphone\r\n3.\tIf the result is an error page, make sure the landing page is available, reach out to the PM with the error message to make sure this is a known issue due as the webpage is not live yet"
+        },
+        {
+          "id": "Print:Print:13",
+          "section": "Print",
+          "label": "Reference/VVPM code: Must be match with provide in WorkFront  with Output file",
+          "detail": "Check the brief on Workfront"
+        },
+        {
+          "id": "Print:Print:14",
+          "section": "Print",
+          "label": "Brand Guideline: Check complete documents",
+          "detail": "Check Color, Font, Logo, Images and other elements as per brand guide"
+        },
+        {
+          "id": "Print:Print:15",
+          "section": "Print",
+          "label": "Crop Mark, Bleed Mark, and Color Strip: In Print document Must have crop mark",
+          "detail": "Check all Required Marks applied correctly"
+        },
+        {
+          "id": "Print:Graphics Audit:3",
+          "section": "Graphics Audit",
+          "label": "Design Element (Creative assets):",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:4",
+          "section": "Graphics Audit",
+          "label": "All scenes are included with individual layers for images, graphs, text, overlay and reference text",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:5",
+          "section": "Graphics Audit",
+          "label": "Editable Artwork Files are provided",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:6",
+          "section": "Graphics Audit",
+          "label": "One InDesign / PSD file per Slide",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:7",
+          "section": "Graphics Audit",
+          "label": "Correct resolution to support retina display",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:8",
+          "section": "Graphics Audit",
+          "label": "Fonts package and links provided in case of Indesigns",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:9",
+          "section": "Graphics Audit",
+          "label": "Fonts: (Styleguide)",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:10",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure to get Font details like font family, font size and font style.",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:11",
+          "section": "Graphics Audit",
+          "label": "Fonts: Ensure that acceptable backup fonts are also specified",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:12",
+          "section": "Graphics Audit",
+          "label": "Is any Font missing? (Yes/No) (If Yes --- Provide list of Fonts below)",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:13",
+          "section": "Graphics Audit",
+          "label": "List of missing Fonts:",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:14",
+          "section": "Graphics Audit",
+          "label": "Alternate Font used: (Provide list of original font and alternate font used)",
+          "detail": ""
+        },
+        {
+          "id": "Print:Graphics Audit:15",
+          "section": "Graphics Audit",
+          "label": "Approval to use alternate Fonts (Yes/No): (DPM approval is required to use alternate fonts)",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "assetType": "PPT/Gslide",
+      "source": "PPT-Gslide- Checklist.xlsx",
+      "items": [
+        {
+          "id": "PPT/Gslide:Checklist:3",
+          "section": "Checklist",
+          "label": "Naming Convention: Is naming convention correct as defined",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:4",
+          "section": "Checklist",
+          "label": "Design & Layout: Is design layout matches with project requirement",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:5",
+          "section": "Checklist",
+          "label": "Media: Embedded media (PDF/Excel/Word/ videos/audio) work correctly",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:6",
+          "section": "Checklist",
+          "label": "Transition & Animation: Smooth transitions between slides",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:7",
+          "section": "Checklist",
+          "label": "Transition & Animation: Animations work correctly in slideshow mode",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:8",
+          "section": "Checklist",
+          "label": "Content Accuracy: All text matches the approved copy document/Annotation",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:9",
+          "section": "Checklist",
+          "label": "Content Accuracy: Superscript and subscript styling verified",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:10",
+          "section": "Checklist",
+          "label": "Content Accuracy: Verify if VVPM is as per ask",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:11",
+          "section": "Checklist",
+          "label": "Content Accuracy: Slide number is in correct order if applicable",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:12",
+          "section": "Checklist",
+          "label": "Links & QR: All links functional and clickable",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:13",
+          "section": "Checklist",
+          "label": "Links & QR: Target media or page accessible",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:14",
+          "section": "Checklist",
+          "label": "Links & QR: QR code is scanable and accessible",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:15",
+          "section": "Checklist",
+          "label": "Links & QR: Video thumbnails linked correctly if applicable",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:16",
+          "section": "Checklist",
+          "label": "Data & Charts: Data representation-Axes/label and data point as per ask",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:17",
+          "section": "Checklist",
+          "label": "Images: All images placement as per template/input/ask",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:18",
+          "section": "Checklist",
+          "label": "Images: Image content is updated as per ask",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:19",
+          "section": "Checklist",
+          "label": "Images: Icons are consistent in style",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:20",
+          "section": "Checklist",
+          "label": "Images: No image pixelation",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:21",
+          "section": "Checklist",
+          "label": "Fonts & Colours: Font styling is kept as per the reference given",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:22",
+          "section": "Checklist",
+          "label": "Fonts & Colours: Correct brand color codes used (Brand Specific or Roche brand colors)",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:23",
+          "section": "Checklist",
+          "label": "Technical Checks: Works on different devices (laptop/projector)",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:24",
+          "section": "Checklist",
+          "label": "Technical Checks: Correct aspect ratio (16:9 usually) follow input/ask",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:25",
+          "section": "Checklist",
+          "label": "Gslide Specific: Google link is accessible to \"All Roche\"",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:26",
+          "section": "Checklist",
+          "label": "Gslide Specific: Match with input PPT slides",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Checklist:27",
+          "section": "Checklist",
+          "label": "Gslide Specific: The PPT should be fully compatible with Google Slides as well, ensuring all alignments and formatting remain intact after conversion",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:2",
+          "section": "Brand Guidelines",
+          "label": "Ocravus:",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:3",
+          "section": "Brand Guidelines",
+          "label": "Font Color:\r\nPRIMARY COLOUR — PERIWINKLE:  #5f6eb3\r\nSECONDARY COLOUR —YELLOW:   #ffc72a\r\nTERTIARY COLOUR — LIME GREEN:   #b5be00",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:4",
+          "section": "Brand Guidelines",
+          "label": "There should be atleast a equal blank space around the \"OCREVUS\" logo. The space should be the size of alphabet \"O\" of logo.",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:5",
+          "section": "Brand Guidelines",
+          "label": "Logo Position\r\nThe preferred Logo position is at the bottom right. It should appear on either\r\na solid white background or within the white CORNER CURVE as part of the\r\nFooter.\r\nThe exception to this rule is the Letterhead which displays the Logo at the top\r\nleft as part of the Roche strip.",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:6",
+          "section": "Brand Guidelines",
+          "label": "HEMLIBRA",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:7",
+          "section": "Brand Guidelines",
+          "label": "Open Sans is the preferred digital typeface. In any of the available weights (ie, Light, Regular,Italic, Bold, Semi Bold, Extra Bold).",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:8",
+          "section": "Brand Guidelines",
+          "label": "Color code provided by HEMLIBRA or as per styleguide\r\nBlue: HEX: 009BD3\r\nOrange: HEX:F04E2A\r\nWhite: HEX:FFFFFF\r\nDark cool Grey: HEX: 55565A\r\nCool Grey: HEX: 78777A\r\nMidnight Blue: HEX: 00416B\r\nDark warm Grey: HEX: 706259\r\nWARM GREY : HEX: 847870\r\nTRANQUIL TEAL:  HEX: 3DC1CD",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:9",
+          "section": "Brand Guidelines",
+          "label": "There should be atleast a equal blank space around the \"HEMLIBRA\" logo. The space should be the size of alphabet \"H\" of logo.",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:10",
+          "section": "Brand Guidelines",
+          "label": "TENCENTRIQ",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:11",
+          "section": "Brand Guidelines",
+          "label": "Color code to be used as per Brand guidlines :\r\nEGGPLANT/AUBERGINE: HEX #641950\r\nRED: HEX #e62436\r\nBLUE: HEX #6dc8f1\r\nDARK GRAY: HEX #9d9fa1\r\nCOOL GRAY: HEX #dad9d7\r\nWATERMELON : HEX #d8365a\r\nROYAL : HEX #1226AA\r\nDARK BLUE : HEX #0083b6\r\nTEAL : HEX #7cc4cb\r\nMAGENTA : HEX #9b1364\r\nYELLOW : HEX #f3b91a",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:12",
+          "section": "Brand Guidelines",
+          "label": "There should be atleast a equal blank space around the \"TENCENTRIQ\" logo. The space should be the size of alphabet \"T\" of logo.",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:13",
+          "section": "Brand Guidelines",
+          "label": "ENSPRYNG :",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:14",
+          "section": "Brand Guidelines",
+          "label": "Brand Font is Open Sans and  Nunito",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:15",
+          "section": "Brand Guidelines",
+          "label": "Color code\r\nAubergine: Hex #242a74\r\nRuby: Hex #ed1556\r\nSky: Hex #91d5eb\r\nBoulder: Hex #777b83",
+          "detail": ""
+        },
+        {
+          "id": "PPT/Gslide:Brand Guidelines:16",
+          "section": "Brand Guidelines",
+          "label": "There should be atleast a equal blank space around the \"ENSPRYNG\" logo. The space should be the size of alphabet \"E\" of logo.",
+          "detail": ""
+        }
+      ]
+    }
+  ]
+}

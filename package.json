@@ -1,0 +1,25 @@
+{
+  "name": "team-project-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared local-network project management and asset audit app",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "data:migrate": "node scripts/migrate-sqlite.js",
+    "workfront:login": "node workfront-login.js",
+    "workfront:install": "playwright install chromium"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "playwright": "^1.52.0",
+    "read-excel-file": "^9.3.10",
+    "write-excel-file": "^4.1.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3"
+  }
+}
